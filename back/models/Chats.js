@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const RendezVousSchema = new Schema({
+const ChatSchema = new Schema({
     patient:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Patient'
@@ -11,10 +11,16 @@ const RendezVousSchema = new Schema({
         ref:'Doctor'
     },
     contenu : String,
-    pieceJointes: FileList,
+    pieceJointes: [
+        {
+            originalname: String,
+            filename: String,
+            path: String
+        }
+    ],
     date: Date
 })
 
-const RendezVous = mongoose.model('RendezVous', RendezVousSchema)
+const Chat = mongoose.model('Chats', ChatSchema)
 
-module.exports = RendezVous
+module.exports = Chat
