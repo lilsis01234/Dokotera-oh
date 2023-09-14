@@ -1,6 +1,9 @@
 import { Text } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import CardRdv from "./components/CardRdv/CardRdv";
+import { Header } from "./components/Header/Header";
+import { CardList } from "./components/CardList/CardList";
+import { CardDoctor } from "./components/CardDoctor/CardDoctor";
 
 export default function App() {
   return (
@@ -8,6 +11,9 @@ export default function App() {
       <SafeAreaView>
         <Text>Eto mi-affiche anle components</Text>
          <CardRdv />
+        <CardDoctor/>
+        <Header/>
+        <CardList />
       </SafeAreaView>
     </SafeAreaProvider>
   );
