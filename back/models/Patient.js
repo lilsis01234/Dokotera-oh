@@ -8,6 +8,7 @@ const PatientSchema = new Schema({
     weight: String,
     address: String,
     dateOfBirth: Date,
+    photo:String,
 })
 
 const Patient = mongoose.model('User', PatientSchema)
