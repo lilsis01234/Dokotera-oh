@@ -8,9 +8,9 @@ const ComptePatientSchema = new Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Patient'
     },
-    role2:{
+    Role:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Role2'
+        ref:'Role'
     }
 })
 const ComptePatient = mongoose.model('ComptePatient', ComptePatientSchema)
