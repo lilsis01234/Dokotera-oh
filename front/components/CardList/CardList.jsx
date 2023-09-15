@@ -1,3 +1,5 @@
+import { Text } from "react-native-web";
+
 export const CardList = () => {
   return (
     <>
