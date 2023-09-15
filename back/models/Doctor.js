@@ -7,6 +7,7 @@ const DoctorSchema = new Schema({
     speciality: String,
     contact: String,
     experience: String,
+    photo:String,
 })
 
 const Doctor = mongoose.model('Doctor', DoctorSchema)

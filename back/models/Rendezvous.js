@@ -10,8 +10,8 @@ const RendezVousSchema = new Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Doctor'
     },
+    description:String,
     heureStart : String,
-    heureEnd: String,
     date: Date
 })
 
