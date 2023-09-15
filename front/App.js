@@ -1,20 +1,20 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import CardRdv from "./components/CardRdv/CardRdv";
+import { Header } from "./components/Header/Header";
+import { CardList } from "./components/CardList/CardList";
+import { CardDoctor } from "./components/CardDoctor/CardDoctor";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello Wolrd ngiqah</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <Text>Eto mi-affiche anle components</Text>
+         <CardRdv />
+        <CardDoctor/>
+        <Header/>
+        <CardList />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
