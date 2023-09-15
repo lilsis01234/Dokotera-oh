@@ -1,5 +1,5 @@
 import { s } from "./CardRdv.style"
-import { Text, View, Image } from "react-native-web"
+import { Text, View, Image, Button } from "react-native-web"
 
 export default function CardRdv () {
   return (
@@ -16,35 +16,35 @@ export default function CardRdv () {
             </Text>
               <View style={ s.form }>
               <View style={ s.form1 }>
-                  <label style={ s.label }>Nom</label>
-                  <input type="text" placeholder="Nom" name="name" style={ s.input }/>
+                  <label style={ s.label }>Nom:</label>
+                  <input type="text" placeholder="Entrez votre Nom ici" name="name" style={ s.input }/>
                 </View>
                 <View style={ s.form1 }>
-                  <label style={ s.label }>Prenom</label>
-                  <input type="text" placeholder="Jours du rendez-vous" style={ s.input }/>
+                  <label style={ s.label }>Prénom:</label>
+                  <input type="text" placeholder="Entrez votre Prénom ici" style={ s.input }/>
                 </View>
                 <View style={ s.form1 }>
-                  <label style={ s.label }>Email</label>
-                  <input type="text" placeholder="Heure du rendez-vous"name="Heure de rendz-vous" style={ s.input }/>
+                  <label style={ s.label }>Date:</label>
+                  <input type="text" placeholder="Entrez la date du rendez-vous ici" style={ s.input }/>
                 </View>
                 <View style={ s.form1 }>
-                  <label style={ s.label }>Phone</label>
+                  <label style={ s.label }>Heures:</label>
+                  <input type="text" placeholder="Entrez l'Heure du rendez-vous ici"name="Heure de rendz-vous" style={ s.input }/>
+                </View>
+                <View style={ s.form1 }>
+                  <label style={ s.label }>Telephone:</label>
                   <input
                     type="tel"
                     pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})"
-                    placeholder="telephone"
+                    placeholder="Entrez votre numero de téléphone ici"
                     id="phone-fbbe"
-                    name="phone"
+                    name="Telephone"
                     style={ s.input }
                   />
                 </View>
-                <View style={ s.button }>
-                  <input
-                    type="submit"
-                    defaultValue="submit"
-                    style={ s.inputButton }
-                  />
-                </View>
+                <Button style={ s.button }>
+                      
+                </Button>
                 </View>
 
                 </View>
@@ -59,55 +59,54 @@ export default function CardRdv () {
             </Text>
             <View style={ s.containerTable }>
               <table style={ s.table }>
-                <colgroup>
-                  <col style= {{width:"20.5%"}} />
-                  <col style= {{width:"19.5%"}} />
-                  <col style= {{width:"20.3%"}} />
-                  <col style= {{width:"19.9%"}} />
-                  <col style= {{width:"19.800000000000004%"}} />
-                </colgroup>
                 <tbody style={ s.tableBody }>
-                  <tr style={{ height: 53 }}>
-                    <td style={ s.td }>Lundi</td>
-                    <td style={ s.td }>Mardi</td>
-                    <td style={ s.td }>Mercredi</td>
-                    <td style={ s.td }>Jeudi</td>
-                    <td style={ s.td }>Vendredi</td>
+                  <tr style={{ height: 1 }}>
+                    <td style={ s.td }>RDV</td>
+                    <td style={ s.td }>Lun</td>
+                    <td style={ s.td }>Mar</td>
+                    <td style={ s.td }>Mer</td>
+                    <td style={ s.td }>Jeu</td>
+                    <td style={ s.td }>Ven</td>
                   </tr>
                   <tr style={{ height: 59 }}>
                     <td style={ s.td }>8h à 10h</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
                   </tr>
                   <tr style={{ height: 59 }}>
                     <td style={ s.td }>10h à 12h</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
                   </tr>
                   <tr style={{ height: 59 }}>
                     <td style={ s.td  }>12h à 14h</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
                   </tr>
                   <tr style={{ height: 59 }}>
                     <td style={ s.td  }>14h à 16h</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
                   </tr>
                   <tr style={{ height: 54 }}>
                     <td style={ s.td  }>16h à 18h</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
-                    <td style={ s.td  }>Disponible</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
+                    <td style={ s.td  }>Dispo</td>
                   </tr>
                 </tbody>
               </table>

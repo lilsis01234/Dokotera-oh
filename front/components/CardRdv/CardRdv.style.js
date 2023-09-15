@@ -4,37 +4,26 @@ import { StyleSheet } from "react-native"
 
 export const s = StyleSheet.create ({
   container: {
-      backgroundColor: "#00bfa6"
+      backgroundColor: "#00bfa6",
+      borderRadius: "40px"
+      
   },
   container1: { backgroundImage: "none", minHeight: "816px",
-    alignItems:"center"
+    alignItems:"center",
+    paddingTop:"auto"
 },
   text: { 
-        paddingTop: "25px",
-        paddingRight: "78px",
-        paddingBottom: "30px",
-        paddingLeft: 0,
-        alignItems:"center",
+        textAlign:"center",
         color:"white",
-        textTransform:"capitalize"
+        fontFamily:"Open Sans",
+        fontWeight:"20px",
+        margin:"10px"
      },
   h2: {
       fontSize: "3.75rem",
-      fontWeight: 700,
-      marginTop: "9px",
-      marginRight: "12px",
-      marginBottom: 0,
-      marginLeft: 0
-    },
-    ".u-section-1 .u-text-2": {
-      letterSpacing: "normal",
-      textTransform: "none",
-      fontWeight: 400,
-      longForm: "none solid rgb(128, 128, 128)",
-      marginTop: "12px",
-      marginRight: "12px",
-      marginBottom: 0,
-      marginLeft: 0
+      textAlign:"center",
+      fontFamily:"Open Sans",
+      color:"white"
     },
   form: { height: "443px",      marginTop: "20px",
     marginRight: "24px",
@@ -46,13 +35,19 @@ export const s = StyleSheet.create ({
     label: { 
       width: "89px",
       marginTop: "30px",
+      marginLeft:"30px",
       flex:1,
-      alignItems:"center"
+      alignItems:"center",
+      color:"white"
      },
     input: { 
       padding: "1rem",
+      paddingRight:"100px",
+      paddingLeft: "25px",
+      marginRight:"50px",
+      marginLeft:"65px",
       backgroundColor: "white",
-      color: "white",
+      color: "black",
       borderRadius: "2rem"
      },
     form1: { 
@@ -62,73 +57,83 @@ export const s = StyleSheet.create ({
      },
 
     button: {
-      backgroundImage: "none",
-      borderStyle: "none",
-      textTransform: "uppercase",
-      fontSize: "1.25rem",
-      letterSpacing: "3px",
-      width: "55%",
-      paddingTop: "19px",
-      paddingRight: "30px",
-      paddingBottom: "21px",
-      paddingLeft: 0
+        marginTop:"30px",
+        padding:"40px",
+        borderRadius:"10px"
     },
 
     container2: { 
         backgroundColor: "white",
-        paddingTop: "8px",
-        paddingRight: "0px",
-        paddingBottom: "8px",
-        paddingLeft: 0
+        flex:1,
+        alignItems:"center"
      },
     image: {
-      width: "190px",
-      height: "189px",
+      width: "100px",
+      height: "100px",
       backgroundImage: 'url("images/fd.jpg")',
       backgroundPosition: "center",
       marginTop: "20px",
       marginRight: "auto",
       marginBottom: 0,
-      marginLeft: "48px",
+      marginLeft: "22px",
       borderRadius: "50%"
     },
     h4: {
       fontWeight: 700,
       letterSpacing: "1px",
       fontSize: "1.875rem",
-      marginTop: "-149px",
+      marginTop: "-75px",
       marginRight: "63px",
       marginBottom: 0,
-      marginLeft: "326px"
+      marginLeft: "100px",
+      fontFamily:"Open Sans"
     },
     h5: {
       letterSpacing: "1px",
       fontSize: "1.125rem",
       fontWeight: 500,
-      marginTop: "32px",
-      marginRight: "95px",
+      marginTop: "10px",
+      marginRight: "320px",
       marginBottom: 0,
-      marginLeft: "326px"
+      marginLeft: "350px"
     },
     text2: {
       fontSize: "1.375rem",
-      marginTop: "92px",
-      marginRight: "84px",
-      marginBottom: 0,
-      marginLeft: "76px"
+      textAlign:"center",
+      margin:"30px",
+      marginTop:"80px"
     },
-    containerTable: { width: "564px",       marginTop: "50px",
-    marginRight: "auto",
-    marginBottom: 0,
-    marginLeft: "auto" },
-    table: { minHeight: "100px" },
+    containerTable: { 
+      alignItems:"center", 
+      backgroundColor:"#00bfa6",
+      borderBlockColor:"white",
+      borderRadius:"40px",
+      marginTop:"auto"
+    },
+    table: { 
+      overlayColor:"white",
+      marginTop:"10px",
+      height:"20px",
+      margin:"30px",
+      alignItems:"center",
+      borderColor:"white"
+    },
     tableBody: {
-      backgroundImage: "none",
-      fontSize: "1.5rem",
-      fontWeight: 400
+      borderBlockColor:"white",
+      backgroundColor:"blue",
+      fontSize:"100px",
+      height:90,
+      borderColor:"white",
+      borderRadius:"10px"
     },
     td: {
       textAlign: "center",
+      height: -10,
+      fontSize:"18px",
+      borderBlockColor:"white",
+      fontFamily:"Open sans",
+      color:"white",
+      borderBlockEndColor:"white"
     }
   })
   
