@@ -11,7 +11,8 @@ router.post('/rendezvous', async (req, res) => {
             patient,
             docteur,
             contenu,
-            date
+            date,
+            approbation:0
         });
 
         const savedRendezVous = await newRendezVous.save();
@@ -47,14 +48,37 @@ router.get('/rendezvous/:id', async (req, res) => {
     }
 });
 
+router.get('/rendezvous/:idDocteur', async (req, res) => {
+    const doc = req.params.idDocteur
+    try {
+        const mesrendezvous = await RendezVous.find({ docteur: idDocteur, approbation:1 }).exec();
+        res.json(mesrendezvous);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des rendez-vous approuvés :', error);
+        res.status(500).json({ message: 'Erreur serveur' });
+      }
+    });
+
+    router.get('/rendezvous/:idPatient', async (req, res) => {
+        const doc = req.params.idPatient
+        try {
+            const mesrendezvous = await RendezVous.find({ patient: idPatient, approbation:1 }).exec();
+            res.json(mesrendezvous);
+          } catch (error) {
+            console.error('Erreur lors de la récupération des rendez-vous approuvés :', error);
+            res.status(500).json({ message: 'Erreur serveur' });
+          }
+        });
+
+
 // Route pour mettre à jour un rendez-vous par son ID (Update)
 router.put('/rendezvous/:id', async (req, res) => {
     try {
-        const { patient, docteur, contenu, date } = req.body;
+        const { contenu, date, heureStart } = req.body;
 
         const updatedRendezVous = await RendezVous.findByIdAndUpdate(
             req.params.id,
-            { patient, docteur, contenu, date },
+            { contenu, date, heureStart },
             { new: true }
         );
 
@@ -127,4 +151,25 @@ router.post('/rendezvous/:idrendezvous', async (req, res) => {
     }
   });
   
+// Dans votre fichier de routes (rendezvousRoutes.js par exemple)
+router.get('/rendezvous/approuves', async (req, res) => {
+    try {
+      const approvedAppointments = await RendezVous.find({ approbation: 1 }).exec();
+      res.json(approvedAppointments);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des rendez-vous approuvés :', error);
+      res.status(500).json({ message: 'Erreur serveur' });
+    }
+  });
+  
+  
+  router.get('/rendezvous/demande', async (req, res) => {
+    try {
+      const approvedAppointments = await RendezVous.find({ approbation: 0 }).exec();
+      res.json(approvedAppointments);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des rendez-vous approuvés :', error);
+      res.status(500).json({ message: 'Erreur serveur' });
+    }
+  });
 module.exports = router;
