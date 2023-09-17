@@ -1,10 +1,18 @@
 import AsyncStogare from "@react-native-async-storage/async-storage";
-import { View, Text, SafeAreaView, ScrollView, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Keyboard,
+  Alert,
+} from "react-native";
 import React from "react";
 import COLORS from "../theme";
 import Input from "../components/Input/Input";
 import { style } from "../components/Input/Input.style";
 import ButtonRegister from "../components/Buttons/ButtonRegister";
+import Loader from "../components/Loader/Loader";
 
 const RegisterScreen = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({
@@ -15,6 +23,7 @@ const RegisterScreen = ({ navigation }) => {
   });
 
   const [errors, setErrors] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
 
   const validate = () => {
     let valid = true;
@@ -50,7 +59,18 @@ const RegisterScreen = ({ navigation }) => {
     }
   };
 
-  const register = () => {};
+  const register = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      try {
+        AsyncStogare.setItem("user",JSON.stringify(inputs));
+        navigation.navigate('LoginScreen')
+      } catch (error) {
+        Alert.alert("Error", "Une erreur c'est produit");
+      }
+    }, 3000);
+  };
 
   const handleOnChange = (text, input) => {
     setInputs((prevState) => ({ ...prevState, [input]: text }));
@@ -61,6 +81,7 @@ const RegisterScreen = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
+      <Loader visible={loading} />
       <ScrollView
         contentContainerStyle={{
           padding: 50,
