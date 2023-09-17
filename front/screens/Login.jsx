@@ -6,14 +6,9 @@ import { styles } from "./Login.style";
 import ButtonRegister from "../components/Buttons/ButtonRegister";
 
 const Login = ({ navigation }) => {
+
   return (
     <>
-      <View className="flex-row justify-start">
-        <TouchableOpacity className="bg-yellow p-2 rounded-tr-2xl ml-4">
-          🤚
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.loginText}>Se connecter en temps que</Text>

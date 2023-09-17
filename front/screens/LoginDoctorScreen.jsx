@@ -14,6 +14,8 @@ import { style } from "../components/Input/Input.style";
 import ButtonRegister from "../components/Buttons/ButtonRegister";
 import Loader from "../components/Loader/Loader";
 
+import { ButtonGoBack } from "../components/ButtonGoBack/ButtonGoBack";
+
 const LoginDoctorScreen = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({
     email: "",
@@ -57,7 +59,7 @@ const LoginDoctorScreen = ({ navigation }) => {
           AsyncStorage.setItem(
             "user",
             JSON.stringify({ ...userData, loggedIn: true })
-          ); 
+          );
           navigation.navigate("HomeScreen");
         } else {
           Alert.alert("Error", "Information invalide");
@@ -75,19 +77,36 @@ const LoginDoctorScreen = ({ navigation }) => {
   const handleError = (errorMessage, input) => {
     setErrors((prevState) => ({ ...prevState, [input]: errorMessage }));
   };
+
+
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
       <Loader visible={loading} />
+      <ButtonGoBack/>
       <ScrollView
         contentContainerStyle={{
           padding: 50,
           paddingHorizontal: 20,
         }}
       >
-        <Text style={{ color: "black", fontSize: 40, fontWeight: "bold", textAlign: "center" }}>
+        <Text
+          style={{
+            color: "black",
+            fontSize: 40,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
           Login
         </Text>
-        <Text style={{ color: "grey", fontSize: 18, fontWeight: "bold", textAlign: "center" }}>
+        <Text
+          style={{
+            color: "grey",
+            fontSize: 18,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
           Connexion en temps que Docteur
         </Text>
 
@@ -118,8 +137,15 @@ const LoginDoctorScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("RegistrationScreen")}
             style={style.loginLink}
           >
-    
-            Pas encore de compte ? <Text style={{color: COLORS.pricipalaColorBlue,textDecorationLine: 'underline'}}>En Créer un</Text> 
+            Pas encore de compte ?{" "}
+            <Text
+              style={{
+                color: COLORS.pricipalaColorBlue,
+                textDecorationLine: "underline",
+              }}
+            >
+              En Créer un
+            </Text>
           </Text>
         </View>
       </ScrollView>

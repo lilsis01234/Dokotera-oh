@@ -13,6 +13,7 @@ import Input from "../components/Input/Input";
 import { style } from "../components/Input/Input.style";
 import ButtonRegister from "../components/Buttons/ButtonRegister";
 import Loader from "../components/Loader/Loader";
+import { ButtonGoBack } from "../components/ButtonGoBack/ButtonGoBack";
 
 const LoginPatientScreen = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({
@@ -78,6 +79,7 @@ const LoginPatientScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[{ backgroundColor: "white", flex: 1 }]}>
       <Loader visible={loading} />
+      <ButtonGoBack/>
       <ScrollView
         contentContainerStyle={[{
           padding: 50,
