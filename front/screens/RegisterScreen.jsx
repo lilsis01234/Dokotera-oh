@@ -141,7 +141,7 @@ const RegisterScreen = ({ navigation }) => {
           />
           <ButtonRegister title="S'enregistrer" onPress={validate} />
           <Text
-            onPress={() => navigation.navigate("LoginScreen")}
+            onPress={() => navigation.navigate("Login")}
             style={style.loginLink}
           >
             Vous avez dejà un compte ?<Text style={{color: COLORS.pricipalaColorBlue,textDecorationLine: 'underline'}}> Se Connecter</Text>  
