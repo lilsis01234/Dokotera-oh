@@ -96,7 +96,7 @@ const RegisterScreen = ({ navigation }) => {
         </Text>
 
         <View style={{ marginVertical: 20 }}>
-          <Input
+           <Input
             placeholder="Votre nom"
             iconName="account-outline"
             label="Nom:"
@@ -144,7 +144,7 @@ const RegisterScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("LoginScreen")}
             style={style.loginLink}
           >
-            Vous avez dejà un compte ? Se Connecter
+            Vous avez dejà un compte ?<Text style={{color: COLORS.pricipalaColorBlue,textDecorationLine: 'underline'}}> Se Connecter</Text>  
           </Text>
         </View>
       </ScrollView>
