@@ -1,15 +1,14 @@
 import { s } from "./CardRdv.style"
-import { Text, View, Image, Button } from "react-native-web"
+import { Text, View, Image, TouchableOpacity } from "react-native-web"
 import React, { Component } from "react"
 import axios, { Axios } from "axios"
+import { Alert } from "react-native"
 
 class CardRdv extends Component {
 
   constructor() {
     super()
     this.state = {
-      patient:"",
-      docteur:"",
       description:"",
       heureStart:"",
       date:""
@@ -18,32 +17,39 @@ class CardRdv extends Component {
 
 
   componentDidMount()  {
-    axios.get("http://localhost:3000/rendez/vous")
-    .then(response => {
-           this.setState({
-            patient: response.data,
-            docteur: response.data,
-           })
-    })
-    .catch(error => {
-      console.error('Erreur de requête :', error)
-    })
-    axios.post("http://localhost:3000/rendez/vous")
-    .then(response => {
-      this.setState({
-        description: response.data,
-        heureStart: response.data,
-        date: response.data
-      })
-    })
-    .catch(error => {
-      console.error('Erreur tolotra:', error)
-    })
+
+
+
   }
 
    render() {
+    const handleClick = () => {
+      addRdv()
+      Alert.alert("rendez-vous envoyé")
+    }
+
+    function addRdv() {
+      const description = document.getElementById("description").value
+      const date = document.getElementById("date").value
+      const heureStart = document.getElementById("heure").value
+
+      const dataRdv = {
+        description: description,
+        date: date,
+        heureStart: heureStart
+      }
+
+      axios.post('http://localhost:3000/rendez/vous', dataRdv)
+      .then(response => {
+        alert(response.data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    }
   return (
 <>
+
 <View style={ s.container }>
   <View style={ s.container1 }>
             <h2 style={ s.h2 }>
@@ -56,41 +62,24 @@ class CardRdv extends Component {
             </Text>
               <View style={ s.form }>
               <View style={ s.form1 }>
-                  <label style={ s.label }>Nom:</label>
-                  <input type="text" placeholder="Entrez votre Nom ici" id="name" style={ s.input }/>
+                  <label style={ s.label }>Description du rendez-vous:</label>
+                   <textarea name="description" id="description" cols="30" rows="30" style={ s.input }></textarea>
                 </View>
                 <View style={ s.form1 }>
-                  <label style={ s.label }>Prénom:</label>
-                  <input type="text" placeholder="Entrez votre Prénom ici" style={ s.input }/>
+                  <label style={ s.label }>Date du render-vous:</label>
+                  <input type="date" id="date" placeholder="Entrez la date du rendez-vous ici" style={ s.input }/>
                 </View>
                 <View style={ s.form1 }>
-                  <label style={ s.label }>Date:</label>
-                  <input type="text" placeholder="Entrez la date du rendez-vous ici" style={ s.input }/>
+                  <label style={ s.label }>Heures du rendez-vous:</label>
+                  <input type="time" id="heure"  placeholder="Entrez l'Heure du rendez-vous ici"name="Heure de rendz-vous" style={ s.input }/>
                 </View>
-                <View style={ s.form1 }>
-                  <label style={ s.label }>Heures:</label>
-                  <input type="text" placeholder="Entrez l'Heure du rendez-vous ici"name="Heure de rendz-vous" style={ s.input }/>
+                <TouchableOpacity onPressIn={handleClick}>
+                  <View style={ s.button }>
+                     <Text style={{ color:"white"}}>Envoyer</Text>
+                  </View>
+                </TouchableOpacity>
                 </View>
-                <View style={ s.form1 }>
-                  <label style={ s.label }>Telephone:</label>
-                  <input
-                    type="tel"
-                    pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})"
-                    placeholder="Entrez votre numero de téléphone ici"
-                    id="phone-fbbe"
-                    name="Telephone"
-                    style={ s.input }
-                  />
-                </View>
-                <Button
-                    style={ s.button }
-                    title="Envoyer"
-                    color="#00bfa6"
-                 />
-                      
-                </View>
-
-                </View>
+</View>
                
                <View style={ s.container2 }>
                 <Image style={ s.image } source={require('./images/fd.jpg')} />
