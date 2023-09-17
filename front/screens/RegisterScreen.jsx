@@ -88,10 +88,10 @@ const RegisterScreen = ({ navigation }) => {
           paddingHorizontal: 20,
         }}
       >
-        <Text style={{ color: "black", fontSize: 40, fontWeight: "bold" }}>
+        <Text style={{ color: "black", fontSize: 40, fontWeight: "bold", textAlign: "center" }}>
           Register
         </Text>
-        <Text style={{ color: "grey", fontSize: 18, fontWeight: "bold" }}>
+        <Text style={{ color: "grey", fontSize: 18, fontWeight: "bold", textAlign: "center" }}>
           Entrez vos information
         </Text>
 

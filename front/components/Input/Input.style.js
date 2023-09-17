@@ -30,6 +30,7 @@ export const style = StyleSheet.create({
     color: COLORS.darkBlue,
     flex: 1,
     borderColor: "red",
+    outlineWidth: 0,
   },
 
   errorText: {

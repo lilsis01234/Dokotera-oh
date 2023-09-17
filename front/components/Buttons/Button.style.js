@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   textButton: {
     color: COLORS.light,
-    fontWeight: "bold",
-    fontSize: 20,
+    fontWeight: 500,
+    fontSize: 23,
   },
 });
