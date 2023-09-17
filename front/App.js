@@ -1,22 +1,24 @@
-import { Text, View, StatusBar } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import CardRdv from "./components/CardRdv/CardRdv";
-import { Header } from "./components/Header/Header";
-import { CardList } from "./components/CardList/CardList";
-import { CardDoctor } from "./components/CardDoctor/CardDoctor";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LoginDoctorScreen from "./screens/LoginDoctorScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import HomeScreen from "./screens/HomeScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <>
-      <SafeAreaProvider>
-        <SafeAreaView>
-          <Text>Eto mi-affiche anle components</Text>
-          <CardRdv />
-          <CardDoctor/>
-          <CardList />
-          <Header/>
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="RegistrationScreen"
+          component={RegisterScreen}
+        ></Stack.Screen>
+        <Stack.Screen name="LoginScreen" component={LoginDoctorScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
