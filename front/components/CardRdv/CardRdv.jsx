@@ -1,7 +1,47 @@
 import { s } from "./CardRdv.style"
 import { Text, View, Image, Button } from "react-native-web"
+import React, { Component } from "react"
+import axios, { Axios } from "axios"
 
-export default function CardRdv () {
+class CardRdv extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      patient:"",
+      docteur:"",
+      description:"",
+      heureStart:"",
+      date:""
+    }
+  }
+
+
+  componentDidMount()  {
+    axios.get("http://localhost:3000/rendez/vous")
+    .then(response => {
+           this.setState({
+            patient: response.data,
+            docteur: response.data,
+           })
+    })
+    .catch(error => {
+      console.error('Erreur de requête :', error)
+    })
+    axios.post("http://localhost:3000/rendez/vous")
+    .then(response => {
+      this.setState({
+        description: response.data,
+        heureStart: response.data,
+        date: response.data
+      })
+    })
+    .catch(error => {
+      console.error('Erreur tolotra:', error)
+    })
+  }
+
+   render() {
   return (
 <>
 <View style={ s.container }>
@@ -17,7 +57,7 @@ export default function CardRdv () {
               <View style={ s.form }>
               <View style={ s.form1 }>
                   <label style={ s.label }>Nom:</label>
-                  <input type="text" placeholder="Entrez votre Nom ici" name="name" style={ s.input }/>
+                  <input type="text" placeholder="Entrez votre Nom ici" id="name" style={ s.input }/>
                 </View>
                 <View style={ s.form1 }>
                   <label style={ s.label }>Prénom:</label>
@@ -42,9 +82,12 @@ export default function CardRdv () {
                     style={ s.input }
                   />
                 </View>
-                <Button style={ s.button }>
+                <Button
+                    style={ s.button }
+                    title="Envoyer"
+                    color="#00bfa6"
+                 />
                       
-                </Button>
                 </View>
 
                 </View>
@@ -116,4 +159,6 @@ export default function CardRdv () {
  
 </>
   )}
+  }
 
+  export default CardRdv

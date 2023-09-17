@@ -3,14 +3,15 @@ const router = express.Router();
 const RendezVous = require('../models/Rendezvous');
 
 // Route pour créer un rendez-vous (Create)
-router.post('/rendezvous', async (req, res) => {
+router.post('/vous', async (req, res) => {
     try {
-        const { patient, docteur, contenu, date } = req.body;
+        const { patient, heureStart, docteur, description, date } = req.body;
 
         const newRendezVous = new RendezVous({
             patient,
             docteur,
-            contenu,
+            description,
+            heureStart,
             date
         });
 
@@ -23,7 +24,7 @@ router.post('/rendezvous', async (req, res) => {
 });
 
 // Route pour obtenir tous les rendez-vous (Read)
-router.get('/rendezvous', async (req, res) => {
+router.get('/vous', async (req, res) => {
     try {
         const rendezvous = await RendezVous.find().populate('patient docteur');
         res.json(rendezvous);
@@ -34,7 +35,7 @@ router.get('/rendezvous', async (req, res) => {
 });
 
 // Route pour obtenir un rendez-vous par son ID (Read)
-router.get('/rendezvous/:id', async (req, res) => {
+router.get('/vous/:id', async (req, res) => {
     try {
         const rendezvous = await RendezVous.findById(req.params.id).populate('patient docteur');
         if (!rendezvous) {
@@ -48,7 +49,7 @@ router.get('/rendezvous/:id', async (req, res) => {
 });
 
 // Route pour mettre à jour un rendez-vous par son ID (Update)
-router.put('/rendezvous/:id', async (req, res) => {
+router.put('/vous/:id', async (req, res) => {
     try {
         const { patient, docteur, contenu, date } = req.body;
 
@@ -70,7 +71,7 @@ router.put('/rendezvous/:id', async (req, res) => {
 });
 
 // Route pour supprimer un rendez-vous par son ID (Delete)
-router.delete('/rendezvous/:id', async (req, res) => {
+router.delete('/vous/:id', async (req, res) => {
     try {
         const deletedRendezVous = await RendezVous.findByIdAndRemove(req.params.id);
 
@@ -86,7 +87,7 @@ router.delete('/rendezvous/:id', async (req, res) => {
 });
 
 
-router.get('/rendezvous/:user1Id/:user2Id', async (req, res) => {
+router.get('/vous/:user1Id/:user2Id', async (req, res) => {
     try {
         const { user1Id, user2Id } = req.params;
 
