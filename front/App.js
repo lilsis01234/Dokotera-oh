@@ -5,6 +5,8 @@ import { Header } from "./components/Header/Header";
 import { CardList } from "./components/CardList/CardList";
 import { CardDoctor } from "./components/CardDoctor/CardDoctor";
 import { ListRdv } from "./components/CardRdv/ListRdv";
+import { s } from "./components/CardDoctor/CardDoctor.style";
+import { Register } from "./components/pages/Register";
 
 export default function App() {
   return (

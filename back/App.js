@@ -7,7 +7,6 @@ const PatientRouter = require('./api/Patient')
 const DoctorRouter = require('./api/Doctor')
 const AuthRouter = require('./api/auth')
 const RoleRouter = require('./api/Roles')
-const RendezVousRouter = require('./api/RendezVous')
 
 /*const RoleRouter = require('./api/Role')
 const LoginRouter = require('./api/login')*/
@@ -20,7 +19,6 @@ app.use('/patient', PatientRouter)
 app.use('/doctor', DoctorRouter)
 app.use('/auth', AuthRouter)
 app.use('/role', RoleRouter)
-app.use('/rendez', RendezVousRouter)
 
 
 /*app.use('/role', RoleRouter)
