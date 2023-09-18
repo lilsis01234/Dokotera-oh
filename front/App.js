@@ -12,9 +12,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-            <ListRdv/>
             <CardRdv/>
-            <CardDoctor/>
       </SafeAreaView>
     </SafeAreaProvider>
   );

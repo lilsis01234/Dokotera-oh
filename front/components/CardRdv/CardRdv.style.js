@@ -4,62 +4,61 @@ import { StyleSheet } from "react-native"
 
 export const s = StyleSheet.create ({
   container: {
-      backgroundColor: "#00bfa6",
+      backgroundColor: "#48cae4",
       borderRadius: "40px"
       
   },
-  container1: { backgroundImage: "none", minHeight: "816px",
-    alignItems:"center",
-    paddingTop:"auto"
+  container1: { backgroundColor: "#48cae4", minHeight: "816px",
+    alignItems:"center", borderRadius:"40px"
 },
   text: { 
         textAlign:"center",
         color:"white",
         fontFamily:"Open Sans",
-        fontWeight:"20px",
+        fontSize:"20px",
         margin:"10px"
      },
   h2: {
-      fontSize: "3.75rem",
+      fontSize: "35px",
       textAlign:"center",
       fontFamily:"Open Sans",
-      color:"white"
+      color:"white",
     },
-  form: { height: "443px",      marginTop: "20px",
-    marginRight: "24px",
-    marginBottom: 0,
-    marginLeft: 0,
+  form: { 
     flex:1,
-    alignItems:"center"
+    marginTop:"50px"
+   },
+   area:{
+    height:"90px",
+    fontSize:"20px",
+    alignItems:"center",
+    borderRadius:"10px",
+    marginTop:"15px",
+    padding:"10px"
    },
     label: { 
-      width: "89px",
-      marginTop: "30px",
-      marginLeft:"30px",
-      flex:1,
-      alignItems:"center",
-      color:"white"
+      textAlign:"center",
+      fontSize:"20px",
+      color:"white",
+      marginTop:"30px"
      },
     input: { 
-      padding: "1rem",
-      paddingRight:"100px",
-      paddingLeft: "25px",
-      marginRight:"50px",
-      marginLeft:"65px",
-      backgroundColor: "white",
-      color: "black",
-      borderRadius: "2rem"
+      borderRadius: "20px",
+      fontSize:"20px",
+      marginTop:"10px",
+      padding:"30px"
      },
-    form1: { 
-      marginLeft: "0",
-      flex:1,
-      alignItems:"center"
-     },
+    // form1: { 
+    //   flex:1,
+    //   alignItems:"center"
+    //  },
 
     button: {
-        marginTop:"30px",
-        padding:"40px",
-        borderRadius:"10px"
+        margin:"30px",
+        paddingVertical: "20px",
+        paddingHorizontal: "40px",
+        borderRadius:"20px",
+        backgroundColor: "#00bfa6"
     },
 
     container2: { 
