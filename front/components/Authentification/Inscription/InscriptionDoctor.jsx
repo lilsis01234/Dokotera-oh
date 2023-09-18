@@ -13,7 +13,7 @@ import axios from "axios";
 import * as ImagePicker from 'expo-image-picker';
 
 
-export const RegisterDoctor = () => {
+const RegisterDoctor = () => {
   const [name, setName] = useState("");
   const [firstname, setFirstname] = useState("");
   const [contact, setContact] = useState("");
@@ -185,3 +185,5 @@ const pickImage = async () => {
     </View>
   );
 };
+
+export default RegisterDoctor

@@ -4,8 +4,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // Importez vos composants de vue
 import CardDoctors from './components/CardDoctor/CardDoctorList';
-import { RegisterDoctor } from './components/Authentification/Inscription/InscriptionPatient';
+import RegisterPatient  from './components/Authentification/Inscription/InscriptionPatient';
+import RegisterDoctor from './components/Authentification/Inscription/InscriptionDoctor';
+
 import LoginDoctorScreen from './components/Authentification/Login/LoginDoctor';
+import LoginPatientScreen from './components/Authentification/Login/LoginPatient';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +19,12 @@ const App = () => {
         <Stack.Screen name="home" component={CardDoctors} />
         <Stack.Screen name="inscriptionDoctor" component={RegisterDoctor} />
         {/* <Stack.Screen name="inscriptionPatient" component={} /> */}
-        <Stack.Screen name="login" component={LoginDoctorScreen} />
+        <Stack.Screen name="login" component={LoginPatientScreen} />
+        <Stack.Screen name="inscriptionPatient" component={RegisterPatient} />
+        <Stack.Screen name="loginDoctor" component={LoginDoctorScreen} />
+
+   
+ 
       </Stack.Navigator>
     </NavigationContainer>
   );

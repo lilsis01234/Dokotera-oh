@@ -21,7 +21,6 @@ const CardDoctors=()=> {
 
   console.log(doctors)
   return (
-    <Stack.Navigator initialRouteName= "home">
     <View style={s.form}>
       {doctors.map((doctor, index) => (
         <View key={index} style={s.form1}>
@@ -39,7 +38,6 @@ const CardDoctors=()=> {
         </View>
       ))}
     </View>
-    </Stack.Navigator>
   );
 }
 
