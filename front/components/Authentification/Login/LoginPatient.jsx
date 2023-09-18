@@ -6,15 +6,6 @@ const LoginPatientScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const inscriptionDoctor = ()=>{
-    navigation.navigate("inscriptionDoctor")
-  }
-  const inscriptionPatient = ()=>{
-    navigation.navigate("inscriptionPatient")
-  }
-  const loginDoctor = ()=>{
-    navigation.navigate("loginDoctor")
-  }  
  
   const handleLogin = async () => {
     try {
@@ -37,6 +28,7 @@ const LoginPatientScreen = ({ navigation }) => {
 
   return (
     <View>
+    <Text>Veuillez vous connecter</Text>
     <Text>Votre email :</Text>
         <TextInput
           style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
@@ -50,10 +42,6 @@ const LoginPatientScreen = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
       />
       <Button title="Se connecter" onPress={handleLogin} />
-      <Button title="Prendre un rendez-vous" onPress={loginDoctor} />
-      <Button title="S'inscrire en tant que docteur" onPress={inscriptionDoctor} />
-      <Button title="S'inscrire en tant que patient" onPress={inscriptionPatient} />
-
     </View>
   );
 };

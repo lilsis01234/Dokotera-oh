@@ -6,6 +6,16 @@ const LoginDoctorScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const inscriptionDoctor = ()=>{
+    navigation.navigate("inscriptionDoctor")
+  }
+  const inscriptionPatient = ()=>{
+    navigation.navigate("inscriptionPatient")
+  }
+  const loginPatient = ()=>{
+    navigation.navigate("loginPatient")
+  }  
+
   const handleLogin = async () => {
     try {
       const response = await axios.post("http://127.0.0.1:3000/auth/loginDoctor", {
@@ -27,6 +37,7 @@ const LoginDoctorScreen = ({ navigation }) => {
 
   return (
     <View>
+    <Text>Bonjour docteur!</Text>
     <Text>Votre email :</Text>
         <TextInput
           style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
@@ -40,6 +51,10 @@ const LoginDoctorScreen = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
       />
       <Button title="Se connecter" onPress={handleLogin} />
+      
+      <Button title="Prendre un rendez-vous" onPress={loginPatient} />
+      <Button title="S'inscrire en tant que docteur" onPress={inscriptionDoctor} />
+      <Button title="S'inscrire en tant que patient" onPress={inscriptionPatient} />
     </View>
   );
 };

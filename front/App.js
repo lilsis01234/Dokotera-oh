@@ -19,11 +19,10 @@ const App = () => {
         <Stack.Screen name="home" component={CardDoctors} />
         <Stack.Screen name="inscriptionDoctor" component={RegisterDoctor} />
         {/* <Stack.Screen name="inscriptionPatient" component={} /> */}
-        <Stack.Screen name="login" component={LoginPatientScreen} />
         <Stack.Screen name="inscriptionPatient" component={RegisterPatient} />
-        <Stack.Screen name="loginDoctor" component={LoginDoctorScreen} />
+        <Stack.Screen name="login" component={LoginDoctorScreen} />  
+        <Stack.Screen name="loginPatient" component={LoginPatientScreen} />   
 
-   
  
       </Stack.Navigator>
     </NavigationContainer>
