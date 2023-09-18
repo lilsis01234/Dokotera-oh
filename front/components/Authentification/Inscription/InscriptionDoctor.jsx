@@ -25,7 +25,6 @@ export const RegisterDoctor = () => {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    // Fetch roles from your backend when the component mounts
     axios
       .get("http://127.0.0.1:3000/role/getRole")
       .then((response) => {
@@ -39,12 +38,12 @@ export const RegisterDoctor = () => {
 const [photo, setPhoto] = useState(null);
 
 const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
+      base64:false
     });
 
     console.log(result);
@@ -55,13 +54,17 @@ const pickImage = async () => {
   };
 
 
- const handleSubmit = () => {
-  if (!name || !firstname || !contact || !speciality || !experience || !email || !password || !selectedRole) {
-    Alert.alert("Error", "Please fill in all fields");
-    return;
-  }
-
-
+  const handleSubmit = async () => {
+    if (!name || !firstname || !contact || !speciality || !experience || !email || !password || !selectedRole) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+  
+    try {
+      // Convert the selected image to a blob
+      const response = await fetch(photo);
+      const blob = await response.blob();
+  
       // Prepare the data to be sent to the server for registration
       const formData = new FormData();
       formData.append("name", name);
@@ -72,28 +75,25 @@ const pickImage = async () => {
       formData.append("email", email);
       formData.append("password", password);
       formData.append("Role", selectedRole);
-      formData.append("photo", {
-        uri: photo,
-        name: "photo.jpg",
-        type: "image/jpeg", // Adjust the content type based on your image type
-      }); 
-
+      formData.append("photo", blob, "photo.jpg");
+  
       console.log(formData);
-
-      axios.post("http://127.0.0.1:3000/doctor/inscriptionDoctor", formData, {
+  
+      // Send the POST request to the backend
+      const res = await axios.post("http://127.0.0.1:3000/doctor/inscriptionDoctor", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      })
-      .then((response) => {
-        console.log(response.data);
-        Alert.alert("Success", "Registration successful");
-      })
-      .catch((error) => {
-        console.error(error);
-        Alert.alert("Error", "Registration failed");
       });
-};
+  
+      console.log(res.data);
+      Alert.alert("Success", "Registration successful");
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Registration failed");
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "white", paddingHorizontal: 20, paddingTop: 20 }}>
       <Text style={{ fontSize: 30 }}>Sign Up</Text>
