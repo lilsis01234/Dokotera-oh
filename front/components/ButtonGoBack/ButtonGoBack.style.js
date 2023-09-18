@@ -3,13 +3,13 @@ import COLORS from "../../theme";
 
 export const s = StyleSheet.create({
   butGoBack: {
-    fontSize: 20,
-    backgroundColor: null,
+    backgroundColor: "transparent",
   },
   iconBack: {
-    padding: 5,
+    padding: 2,
+    margin: 2,
     color: "white",
-    width: 35,
+    width: 30,
     height: 30,
     fontSize: 25,
     backgroundColor: COLORS.pricipalaColorBlue,
