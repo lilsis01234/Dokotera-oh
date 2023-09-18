@@ -12,9 +12,6 @@ router.post('/vous', async (req, res) => {
             docteur,
             description,
             heureStart,
-            date
-            
-            date,
             approbation:0
         });
 
@@ -97,11 +94,7 @@ router.put('/vous/:id', async (req, res) => {
 });
 
 // Route pour supprimer un rendez-vous par son ID (Delete)
-<<<<<<< HEAD
-router.delete('/vous/:id', async (req, res) => {
-=======
 router.delete('/desapprendezvous/:id', async (req, res) => {
->>>>>>> 7b3e6999777e8838658a94c1e3aaab7bec3eae78
     try {
         const deletedRendezVous = await RendezVous.findByIdAndRemove(req.params.id);
 
