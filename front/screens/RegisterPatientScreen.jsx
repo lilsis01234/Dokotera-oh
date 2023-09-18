@@ -140,7 +140,7 @@ const RegisterScreen = ({ navigation }) => {
           />
           <Input
             placeholder="Votre Prénom"
-            iconfName="account-outline"
+            iconName="account-outline"
             label="Prénom:"
             error={errors.fName}
             onFocus={() => {
@@ -150,7 +150,7 @@ const RegisterScreen = ({ navigation }) => {
           />
           <Input
             placeholder="gabigabi@fabi.sk"
-            iconlName="email-outline"
+            iconName="email-outline"
             label="Email:"
             error={errors.email}
             onFocus={() => {

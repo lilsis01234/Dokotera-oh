@@ -18,9 +18,12 @@ import { ButtonGoBack } from "../components/ButtonGoBack/ButtonGoBack";
 const RegisterDoctorScreen = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({
     email: "",
-    name: "",
+    lName: "",
+    fName: "",
     phone: "",
     password: "",
+    xp: "",
+    special: "",
   });
 
   const [errors, setErrors] = React.useState({});
@@ -30,20 +33,35 @@ const RegisterDoctorScreen = ({ navigation }) => {
     let valid = true;
     Keyboard.dismiss();
     if (!inputs.email) {
-      handleError("Veyez remplire ce champ", "email");
+      handleError("Veuillez remplire ce champ", "email");
       valid = false;
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
       valid = false;
       handleError("Votre email n'est pas valide", "email");
     }
 
-    if (!inputs.name) {
-      handleError("Veyez remplire ce champ", "name");
+    if (!inputs.lName) {
+      handleError("Veuillez remplire ce champ", "lName");
+      valid = false;
+    }
+
+    if (!inputs.fName) {
+      handleError("Veuillez remplire ce champ", "fName");
+      valid = false;
+    }
+
+    if (!inputs.px) {
+      handleError("Veuillez remplire ce champ", "xp");
+      valid = false;
+    }
+
+    if (!inputs.special) {
+      handleError("Veuillez remplire ce champ", "special");
       valid = false;
     }
 
     if (!inputs.password) {
-      handleError("Veyez remplire ce champ", "password");
+      handleError("Veuillez remplire ce champ", "password");
       valid = false;
     } else if (inputs.password.length < 5) {
       valid = false;
@@ -51,7 +69,7 @@ const RegisterDoctorScreen = ({ navigation }) => {
     }
 
     if (!inputs.phone) {
-      handleError("Veyez remplire ce champ", "phone");
+      handleError("Veuillez remplire ce champ", "phone");
       valid = false;
     }
 
@@ -98,7 +116,7 @@ const RegisterDoctorScreen = ({ navigation }) => {
             textAlign: "center",
           }}
         >
-          Docteur
+          Patient
         </Text>
         <Text
           style={{
@@ -108,7 +126,7 @@ const RegisterDoctorScreen = ({ navigation }) => {
             textAlign: "center",
           }}
         >
-          Créer un compte en temps que Docteur
+          Créer un compte en temps que patient
         </Text>
 
         <View style={{ marginVertical: 20 }}>
@@ -116,11 +134,41 @@ const RegisterDoctorScreen = ({ navigation }) => {
             placeholder="Votre nom"
             iconName="account-outline"
             label="Nom:"
-            error={errors.name}
+            error={errors.lName}
             onFocus={() => {
-              handleError(null, "name");
+              handleError(null, "lName");
             }}
-            onChangeText={(text) => handleOnChange(text, "name")}
+            onChangeText={(text) => handleOnChange(text, "lName")}
+          />
+          <Input
+            placeholder="Votre Prénom"
+            iconName="account-outline"
+            label="Prénom:"
+            error={errors.fName}
+            onFocus={() => {
+              handleError(null, "fName");
+            }}
+            onChangeText={(text) => handleOnChange(text, "fName")}
+          />
+          <Input
+            placeholder="Dentiste"
+            iconName=""
+            label="Spécialité:"
+            error={errors.special}
+            onFocus={() => {
+              handleError(null, "special");
+            }}
+            onChangeText={(text) => handleOnChange(text, "special")}
+          />
+          <Input
+            placeholder="Année (ex:10ans)"
+            iconName=""
+            label="Experience:"
+            error={errors.xp}
+            onFocus={() => {
+              handleError(null, "xp");
+            }}
+            onChangeText={(text) => handleOnChange(text, "xp")}
           />
           <Input
             placeholder="gabigabi@fabi.sk"
@@ -155,20 +203,21 @@ const RegisterDoctorScreen = ({ navigation }) => {
             }}
             onChangeText={(text) => handleOnChange(text, "phone")}
           />
+
           <ButtonRegister title="S'enregistrer" onPress={validate} />
           <Text
             onPress={() => navigation.navigate("Login")}
             style={style.loginLink}
           >
             Vous avez dejà un compte ?
-          <Text
-            style={{
-              color: COLORS.pricipalaColorBlue,
-              textDecorationLine: "underline",
-            }}
-          >
-            Se Connecter en temps que Docteur
-          </Text>
+            <Text
+              style={{
+                color: COLORS.pricipalaColorBlue,
+                textDecorationLine: "underline",
+              }}
+            >
+              Se Connecter
+            </Text>
           </Text>
         </View>
       </ScrollView>
