@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import axios from "axios"; // Import axios for making API requests
 
-export function CardDoctor() {
+const CardDoctors=()=> {
+
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
@@ -39,3 +40,5 @@ export function CardDoctor() {
     </View>
   );
 }
+
+export default CardDoctors

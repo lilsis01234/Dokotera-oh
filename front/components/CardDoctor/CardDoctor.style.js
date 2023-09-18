@@ -14,6 +14,8 @@ const s = StyleSheet.create({
     width: 250,
     borderRadius: 50,
     fontSize: 15,
+    marginLeft:10,
+    marginRight:10
   },
   image: {
     shadowColor: "black",

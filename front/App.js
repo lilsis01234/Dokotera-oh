@@ -1,5 +1,3 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginDoctorScreen from "./screens/LoginDoctorScreen";
 import LoginPatientScreen from "./screens/LoginPatientScreen";
@@ -8,13 +6,23 @@ import RegisterDoctorScreen from "./screens/RegisterDoctorScreen";
 import HomeScreen from "./screens/HomeScreen";
 import Login from "./screens/Login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createNativeStackNavigator();
+// Importez vos composants de vue
+import CardDoctors from './components/CardDoctor/CardDoctorList';
+import RegisterPatient  from './components/Authentification/Inscription/InscriptionPatient';
+import RegisterDoctor from './components/Authentification/Inscription/InscriptionDoctor';
 
-export default function App() {
+import LoginDoctorScreen from './components/Authentification/Login/LoginDoctor';
+import LoginPatientScreen from './components/Authentification/Login/LoginPatient';
+
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}/>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen
           name="RegistrationDoctorScreen"
@@ -30,7 +38,18 @@ export default function App() {
           component={LoginPatientScreen}
         />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Navigator initialRouteName="login">
+        <Stack.Screen name="home" component={CardDoctors} />
+        <Stack.Screen name="inscriptionDoctor" component={RegisterDoctor} />
+        {/* <Stack.Screen name="inscriptionPatient" component={} /> */}
+        <Stack.Screen name="inscriptionPatient" component={RegisterPatient} />
+        <Stack.Screen name="login" component={LoginDoctorScreen} />  
+        <Stack.Screen name="loginPatient" component={LoginPatientScreen} />   
+
+ 
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default App;
