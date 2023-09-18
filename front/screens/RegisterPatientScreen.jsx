@@ -198,7 +198,7 @@ const RegisterScreen = ({ navigation }) => {
 
           <ButtonRegister title="S'enregistrer" onPress={validate} />
           <Text
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate("LoginPatientScreen")}
             style={style.loginLink}
           >
             Vous avez dejà un compte ?
@@ -208,7 +208,7 @@ const RegisterScreen = ({ navigation }) => {
                 textDecorationLine: "underline",
               }}
             >
-              Se Connecter
+              Se Connecter en temps que patient
             </Text>
           </Text>
         </View>

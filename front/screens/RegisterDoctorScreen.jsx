@@ -116,7 +116,7 @@ const RegisterDoctorScreen = ({ navigation }) => {
             textAlign: "center",
           }}
         >
-          Patient
+          Docteur
         </Text>
         <Text
           style={{
@@ -126,7 +126,7 @@ const RegisterDoctorScreen = ({ navigation }) => {
             textAlign: "center",
           }}
         >
-          Créer un compte en temps que patient
+          Créer un compte en temps que Docteur
         </Text>
 
         <View style={{ marginVertical: 20 }}>
@@ -206,7 +206,7 @@ const RegisterDoctorScreen = ({ navigation }) => {
 
           <ButtonRegister title="S'enregistrer" onPress={validate} />
           <Text
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate("LoginDoctorScreen")}
             style={style.loginLink}
           >
             Vous avez dejà un compte ?
@@ -216,7 +216,7 @@ const RegisterDoctorScreen = ({ navigation }) => {
                 textDecorationLine: "underline",
               }}
             >
-              Se Connecter
+              Se Connecter en temps que docteur
             </Text>
           </Text>
         </View>
