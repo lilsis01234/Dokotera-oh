@@ -29,7 +29,7 @@ export const Register = () => {
         style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
       >
         <Text className="text-[30px]">Sign Up</Text>
-        <View className="form space-y-2">
+        <View className="form space-y-2">""
           <Text className="text-gray-700 ml-4">Last Name :</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"

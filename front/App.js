@@ -11,11 +11,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={s.form}>
-        <CardDoctor
-          firstname={"mandresy"}
-          name={"santatsoa"}
-          specialité={"généraliste"}
-        />
+        <CardDoctor/>
       </SafeAreaView>
     </SafeAreaProvider>
   );
