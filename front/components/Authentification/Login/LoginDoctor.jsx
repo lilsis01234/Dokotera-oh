@@ -8,16 +8,14 @@ const LoginDoctorScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:3000/doctor/loginDoctor", {
+      const response = await axios.post("http://127.0.0.1:3000/auth/loginDoctor", {
         email,
         password,
       });
 
       if (response.status === 200) {
-        // Login successful
-        // Save user data or token in AsyncStorage or Redux store
-        // Redirect to the home screen or another screen
-        navigation.navigate("Home"); // Replace "Home" with your screen name
+        console.log("Login Response Data:", response.data);
+        navigation.navigate("home");
       } else {
         Alert.alert("Login Failed", "Invalid email or password");
       }
@@ -29,14 +27,15 @@ const LoginDoctorScreen = ({ navigation }) => {
 
   return (
     <View>
-      <Text>Email:</Text>
+    <Text>Votre email :</Text>
+        <TextInput
+          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
+          placeholder="fabiola@fab.com"
+          onChangeText={(text) => setEmail(text)}
+        />
+      <Text>Votre mot de passe:</Text>
       <TextInput
-        placeholder="Votre email"
-        onChangeText={(text) => setEmail(text)}
-      />
-      <Text>Password:</Text>
-      <TextInput
-        placeholder="Votre mot de passe"
+        style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
         secureTextEntry
         onChangeText={(text) => setPassword(text)}
       />

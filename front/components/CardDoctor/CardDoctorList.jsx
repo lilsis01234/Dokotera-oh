@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import axios from "axios"; // Import axios for making API requests
 
-export function CardDoctor() {
+const CardDoctors=()=> {
+
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export function CardDoctor() {
 
   console.log(doctors)
   return (
+    <Stack.Navigator initialRouteName= "home">
     <View style={s.form}>
       {doctors.map((doctor, index) => (
         <View key={index} style={s.form1}>
@@ -37,5 +39,8 @@ export function CardDoctor() {
         </View>
       ))}
     </View>
+    </Stack.Navigator>
   );
 }
+
+export default CardDoctors
