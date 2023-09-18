@@ -7,7 +7,7 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import React, { useDebugValue } from "react";
+import React, { useDebugValue, useState } from "react";
 import COLORS from "../theme/index";
 import Input from "../components/Input/Input";
 import { style } from "../components/Input/Input.style";
@@ -58,7 +58,7 @@ const LoginPatientScreen = ({ navigation }) => {
           AsyncStorage.setItem(
             "user",
             JSON.stringify({ ...userData, loggedIn: true })
-          ); 
+          );
           navigation.navigate("HomeScreen");
         } else {
           Alert.alert("Error", "Information invalide");
@@ -79,17 +79,37 @@ const LoginPatientScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[{ backgroundColor: "white", flex: 1 }]}>
       <Loader visible={loading} />
-      <ButtonGoBack/>
+      <ButtonGoBack />
       <ScrollView
-        contentContainerStyle={[{
-          padding: 50,
-          paddingHorizontal: 20,
-        }]}
+        contentContainerStyle={[
+          {
+            padding: 50,
+            paddingHorizontal: 20,
+          },
+        ]}
       >
-        <Text style={[{ color: "black", fontSize: 40, fontWeight: "bold", textAlign: "center" }]}>
-          Login
+        <Text
+          style={[
+            {
+              color: "black",
+              fontSize: 40,
+              fontWeight: "bold",
+              textAlign: "center",
+            },
+          ]}
+        >
+          Patient
         </Text>
-        <Text style={[{ color: "grey", fontSize: 18, fontWeight: "bold", textAlign: "center" }]}>
+        <Text
+          style={[
+            {
+              color: "grey",
+              fontSize: 18,
+              fontWeight: "bold",
+              textAlign: "center",
+            },
+          ]}
+        >
           Connexion en temps que Patient
         </Text>
 
@@ -120,8 +140,17 @@ const LoginPatientScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("RegistrationScreen")}
             style={[style.loginLink]}
           >
-    
-            Pas encore de compte ? <Text style={[{color: COLORS.pricipalaColorBlue,textDecorationLine: 'underline'}]}>En Créer un</Text> 
+            Pas encore de compte ?{" "}
+            <Text
+              style={[
+                {
+                  color: COLORS.pricipalaColorBlue,
+                  textDecorationLine: "underline",
+                },
+              ]}
+            >
+              Créer un compte en temps que Patient
+            </Text>
           </Text>
         </View>
       </ScrollView>

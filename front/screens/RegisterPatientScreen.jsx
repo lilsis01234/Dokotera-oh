@@ -6,6 +6,7 @@ import {
   ScrollView,
   Keyboard,
   Alert,
+  TextInput,
 } from "react-native";
 import React from "react";
 import COLORS from "../theme";
@@ -15,10 +16,15 @@ import ButtonRegister from "../components/Buttons/ButtonRegister";
 import Loader from "../components/Loader/Loader";
 import { ButtonGoBack } from "../components/ButtonGoBack/ButtonGoBack";
 
+import DateTimePicker from "@react-native-community/datetimepicker";
+
 const RegisterScreen = ({ navigation }) => {
+
   const [inputs, setInputs] = React.useState({
     email: "",
-    name: "",
+    lName: "",
+    fName: "",
+    birth: "",
     phone: "",
     password: "",
   });
@@ -30,20 +36,30 @@ const RegisterScreen = ({ navigation }) => {
     let valid = true;
     Keyboard.dismiss();
     if (!inputs.email) {
-      handleError("Veyez remplire ce champ", "email");
+      handleError("Veuillez remplire ce champ", "email");
       valid = false;
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
       valid = false;
       handleError("Votre email n'est pas valide", "email");
     }
 
-    if (!inputs.name) {
-      handleError("Veyez remplire ce champ", "name");
+    if (!inputs.lName) {
+      handleError("Veuillez remplire ce champ", "lName");
+      valid = false;
+    }
+
+    if (!inputs.birth) {
+      handleError("Veuillez remplire ce champ", "birth");
+      valid = false;
+    }
+
+    if (!inputs.fName) {
+      handleError("Veuillez remplire ce champ", "fName");
       valid = false;
     }
 
     if (!inputs.password) {
-      handleError("Veyez remplire ce champ", "password");
+      handleError("Veuillez remplire ce champ", "password");
       valid = false;
     } else if (inputs.password.length < 5) {
       valid = false;
@@ -51,7 +67,7 @@ const RegisterScreen = ({ navigation }) => {
     }
 
     if (!inputs.phone) {
-      handleError("Veyez remplire ce champ", "phone");
+      handleError("Veuillez remplire ce champ", "phone");
       valid = false;
     }
 
@@ -65,8 +81,8 @@ const RegisterScreen = ({ navigation }) => {
     setTimeout(() => {
       setLoading(false);
       try {
-        AsyncStogare.setItem("user",JSON.stringify(inputs));
-        navigation.navigate('LoginScreen')
+        AsyncStogare.setItem("user", JSON.stringify(inputs));
+        navigation.navigate("LoginScreen");
       } catch (error) {
         Alert.alert("Error", "Une erreur c'est produit");
       }
@@ -82,7 +98,7 @@ const RegisterScreen = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
-      <ButtonGoBack/>
+      <ButtonGoBack />
       <Loader visible={loading} />
       <ScrollView
         contentContainerStyle={{
@@ -90,27 +106,51 @@ const RegisterScreen = ({ navigation }) => {
           paddingHorizontal: 20,
         }}
       >
-        <Text style={{ color: "black", fontSize: 40, fontWeight: "bold", textAlign: "center" }}>
-          Register
+        <Text
+          style={{
+            color: "black",
+            fontSize: 40,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          Patient
         </Text>
-        <Text style={{ color: "grey", fontSize: 18, fontWeight: "bold", textAlign: "center" }}>
-          Entrez vos information
+        <Text
+          style={{
+            color: "grey",
+            fontSize: 18,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          Créer un compte en temps que patient
         </Text>
 
         <View style={{ marginVertical: 20 }}>
-           <Input
+          <Input
             placeholder="Votre nom"
             iconName="account-outline"
             label="Nom:"
-            error={errors.name}
+            error={errors.lName}
             onFocus={() => {
-              handleError(null, "name");
+              handleError(null, "lName");
             }}
-            onChangeText={(text) => handleOnChange(text, "name")}
+            onChangeText={(text) => handleOnChange(text, "lName")}
+          />
+          <Input
+            placeholder="Votre Prénom"
+            iconfName="account-outline"
+            label="Prénom:"
+            error={errors.fName}
+            onFocus={() => {
+              handleError(null, "fName");
+            }}
+            onChangeText={(text) => handleOnChange(text, "fName")}
           />
           <Input
             placeholder="gabigabi@fabi.sk"
-            iconName="email-outline"
+            iconlName="email-outline"
             label="Email:"
             error={errors.email}
             onFocus={() => {
@@ -141,12 +181,35 @@ const RegisterScreen = ({ navigation }) => {
             }}
             onChangeText={(text) => handleOnChange(text, "phone")}
           />
+
+            <Input
+              placeholder="21/05/2004"
+              iconName="calendar-month"
+              // placeholderTextColor="red"
+              label="Date de naissance:"
+              onFocus={() => {
+                handleError(null, "birth");
+              }}
+              KeyboardType="numeric"
+              onChangeText={(text) => handleOnChange(text, "birth")}
+              error={errors.birth}
+            />
+
+
           <ButtonRegister title="S'enregistrer" onPress={validate} />
           <Text
             onPress={() => navigation.navigate("Login")}
             style={style.loginLink}
           >
-            Vous avez dejà un compte ?<Text style={{color: COLORS.pricipalaColorBlue,textDecorationLine: 'underline'}}> Se Connecter</Text>  
+            Vous avez dejà un compte ?
+            <Text
+              style={{
+                color: COLORS.pricipalaColorBlue,
+                textDecorationLine: "underline",
+              }}
+            >
+              Se Connecter
+            </Text>
           </Text>
         </View>
       </ScrollView>

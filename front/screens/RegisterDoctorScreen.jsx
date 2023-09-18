@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStogare from "@react-native-async-storage/async-storage";
 import {
   View,
   Text,
@@ -7,16 +7,15 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import React, { useDebugValue } from "react";
-import COLORS from "../theme/index";
+import React from "react";
+import COLORS from "../theme";
 import Input from "../components/Input/Input";
 import { style } from "../components/Input/Input.style";
 import ButtonRegister from "../components/Buttons/ButtonRegister";
 import Loader from "../components/Loader/Loader";
-
 import { ButtonGoBack } from "../components/ButtonGoBack/ButtonGoBack";
 
-const LoginDoctorScreen = ({ navigation }) => {
+const RegisterDoctorScreen = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({
     email: "",
     name: "",
@@ -33,39 +32,43 @@ const LoginDoctorScreen = ({ navigation }) => {
     if (!inputs.email) {
       handleError("Veyez remplire ce champ", "email");
       valid = false;
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      valid = false;
+      handleError("Votre email n'est pas valide", "email");
+    }
+
+    if (!inputs.name) {
+      handleError("Veyez remplire ce champ", "name");
+      valid = false;
     }
 
     if (!inputs.password) {
       handleError("Veyez remplire ce champ", "password");
       valid = false;
+    } else if (inputs.password.length < 5) {
+      valid = false;
+      handleError("Doit contenir au moins 8 carractères", "password");
+    }
+
+    if (!inputs.phone) {
+      handleError("Veyez remplire ce champ", "phone");
+      valid = false;
     }
 
     if (valid) {
-      login();
+      register();
     }
   };
 
-  const login = () => {
+  const register = () => {
     setLoading(true);
-    setTimeout(async () => {
+    setTimeout(() => {
       setLoading(false);
-      let userData = await AsyncStorage.getItem("user");
-      if (userData) {
-        userData = JSON.parse(userData);
-        if (
-          inputs.email == userData.email &&
-          inputs.password == userData.password
-        ) {
-          AsyncStorage.setItem(
-            "user",
-            JSON.stringify({ ...userData, loggedIn: true })
-          );
-          navigation.navigate("HomeScreen");
-        } else {
-          Alert.alert("Error", "Information invalide");
-        }
-      } else {
-        Alert.alert("Error", "Cet utilisateur n'existe pas");
+      try {
+        AsyncStogare.setItem("user", JSON.stringify(inputs));
+        navigation.navigate("LoginScreen");
+      } catch (error) {
+        Alert.alert("Error", "Une erreur c'est produit");
       }
     }, 3000);
   };
@@ -77,12 +80,10 @@ const LoginDoctorScreen = ({ navigation }) => {
   const handleError = (errorMessage, input) => {
     setErrors((prevState) => ({ ...prevState, [input]: errorMessage }));
   };
-
-
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
+      <ButtonGoBack />
       <Loader visible={loading} />
-      <ButtonGoBack/>
       <ScrollView
         contentContainerStyle={{
           padding: 50,
@@ -97,7 +98,7 @@ const LoginDoctorScreen = ({ navigation }) => {
             textAlign: "center",
           }}
         >
-          Docteur 
+          Docteur
         </Text>
         <Text
           style={{
@@ -107,10 +108,20 @@ const LoginDoctorScreen = ({ navigation }) => {
             textAlign: "center",
           }}
         >
-          Connexion en temps que Docteur
+          Créer un compte en temps que Docteur
         </Text>
 
         <View style={{ marginVertical: 20 }}>
+          <Input
+            placeholder="Votre nom"
+            iconName="account-outline"
+            label="Nom:"
+            error={errors.name}
+            onFocus={() => {
+              handleError(null, "name");
+            }}
+            onChangeText={(text) => handleOnChange(text, "name")}
+          />
           <Input
             placeholder="gabigabi@fabi.sk"
             iconName="email-outline"
@@ -132,20 +143,32 @@ const LoginDoctorScreen = ({ navigation }) => {
             }}
             onChangeText={(text) => handleOnChange(text, "password")}
           />
-          <ButtonRegister title="Se connecter" onPress={validate} />
+          <Input
+            // inputMode="numeric"
+            KeyboardType="numeric"
+            placeholder="Votre numéro de téléphone"
+            iconName="phone-outline"
+            label="Contact:"
+            error={errors.phone}
+            onFocus={() => {
+              handleError(null, "phone");
+            }}
+            onChangeText={(text) => handleOnChange(text, "phone")}
+          />
+          <ButtonRegister title="S'enregistrer" onPress={validate} />
           <Text
-            onPress={() => navigation.navigate("RegistrationDoctorScreen")}
+            onPress={() => navigation.navigate("Login")}
             style={style.loginLink}
           >
-            Pas encore de compte ?{" "}
-            <Text
-              style={{
-                color: COLORS.pricipalaColorBlue,
-                textDecorationLine: "underline",
-              }}
-            >
-              Créer un compte Docteur
-            </Text>
+            Vous avez dejà un compte ?
+          <Text
+            style={{
+              color: COLORS.pricipalaColorBlue,
+              textDecorationLine: "underline",
+            }}
+          >
+            Se Connecter en temps que Docteur
+          </Text>
           </Text>
         </View>
       </ScrollView>
@@ -153,4 +176,4 @@ const LoginDoctorScreen = ({ navigation }) => {
   );
 };
 
-export default LoginDoctorScreen;
+export default RegisterDoctorScreen;
