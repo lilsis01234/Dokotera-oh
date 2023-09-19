@@ -1,74 +1,133 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { s } from "../CardDoctor/CardDoctor.style";
 
 const UserProfile = ({ route, navigation }) => {
-  const [userData, setUserData] = useState(null); // Initialize userData as null
-  const etat = localStorage.getItem('etat'); // Get the value of 'etat' from localStorage
+  const [userData, setUserData] = useState(null);
 
+  const id = localStorage.getItem('id');
+  
   useEffect(() => {
     const { doctorId } = route.params;
 
-    // Make a GET request to fetch user data based on doctorId
     axios.get(`http://localhost:3000/doctor/profil/${doctorId}`)
       .then((response) => {
-        // Set the fetched user data to the state
         setUserData(response.data);
       })
       .catch((error) => {
-        // Handle errors appropriately
         console.error(error);
       });
   }, [route.params]);
 
+  const renderUserProfile = () => {
+    if (!userData) {
+      return <Text>Chargement en cours...</Text>;
+    }
+
+    return (
+      <View style={styles.container}>
+        <Image style={styles.photo} source={{ uri: `http://localhost:3000/uploads/${userData.photo}` }} />
+        <Text style={styles.name}>{userData.name} {userData.firstname}</Text>
+        <Text style={styles.speciality}>{userData.speciality}</Text>
+        <Text style={styles.contact}>{userData.contact}</Text>
+
+        {userData.experience && (
+          <View style={styles.experienceContainer}>
+            <Text style={styles.experienceTitle}>Expérience:</Text>
+            <Text style={styles.experience}>{userData.experience}</Text>
+          </View>
+        )}
+
+        {userData.weight && (
+          <Text style={styles.additionalInfo}>Poids: {userData.weight}</Text>
+        )}
+
+        {userData.dateOfBirth && (
+          <Text style={styles.additionalInfo}>Date de naissance: {userData.dateOfBirth}</Text>
+        )}
+
+        {userData.address && (
+          <Text style={styles.additionalInfo}>Adresse: {userData.address}</Text>
+        )}
+
+        {userData._id !== id && (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate('callScreen', { userData: doctor._id });
+          }}
+        >
+          <Text style={styles.buttonText}>Appeler maintenant</Text>
+        </TouchableOpacity>)}
+      </View>
+    );
+  };
+
   return (
-    <View style={s.form}>
-      {userData ? (
-        etat === 'docteur' ? (
-          <View  style={s.form1}>
-            <View style={s.image} className="flex-row justify-center -mt-14">
-              <Image style={s.photo} source={{ uri: `http://localhost:3000/uploads/${userData.photo}` }} />
-            </View>
-            <Text style={s.text2}> Nom </Text> {userData.name} {userData.firstname}
-            <br />
-            <Text style={s.text2}> Spécialité:</Text> {userData.speciality}
-            <br />
-            <Text style={s.text2}> Contact:</Text> {userData.contact}
-            <br />
-            <Text style={s.text2}> Experience:</Text> {userData.experience}
-            <br />
-            {/* Conditionally render based on the value of 'etat' */}
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('callScreen', { userData: doctor._id });
-              }}
-            >
-              <Text>Appeler maintenant</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View  style={s.form1}>
-            <View style={s.image} className="flex-row justify-center -mt-14">
-              <Image style={s.photo} source={{ uri: `http://localhost:3000/uploads/${userData.photo}` }} />
-            </View>
-            <Text style={s.text2}> Nom </Text> {userData.name} {userData.firstname}
-            <br />
-            <Text style={s.text2}> Poids </Text> {userData.weight} 
-            <br />
-            <Text style={s.text2}> Date de naissance </Text> {userData.dateOfBirth} 
-            <br />
-            <Text style={s.text2}> Contact </Text> {userData.contact} 
-            <br /> 
-            <Text style={s.text2}> Adresse </Text> {userData.address} 
-            <br />
-          </View>
-        )
-      ) : (
-        <Text>Chargement en cours...</Text>
-      )}
+    <View style={styles.pageContainer}>
+      {renderUserProfile()}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  pageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+  },
+  photo: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  speciality: {
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  contact: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  experienceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  experienceTitle: {
+    fontSize: 16,
+    marginRight: 5,
+  },
+  experience: {
+    fontSize: 16,
+  },
+  additionalInfo: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  button: {
+    backgroundColor: '#00bfa6',
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
+  },
+});
 
 export default UserProfile;

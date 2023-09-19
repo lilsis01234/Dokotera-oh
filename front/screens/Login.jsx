@@ -1,44 +1,85 @@
-import AsyncStogare from "@react-native-async-storage/async-storage";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import COLORS from "../theme";
-import { styles } from "./Login.style";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons"; // Import FontAwesome5 for icons
 import ButtonRegister from "../components/Buttons/ButtonRegister";
 
 const Login = ({ navigation }) => {
-
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text style={styles.loginText}>Se connecter en tant que</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <ButtonRegister
-            title="Docteur"
-            onPress={() => navigation.navigate("login")}
-          />
-          <ButtonRegister
-            title="Patient"
-            onPress={() => navigation.navigate("loginPatient")}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.loginText}>Vous n'avez pas encore de compte? S'inscrire en tant que </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <ButtonRegister
-            title="Docteur"
-            onPress={() => navigation.navigate("inscriptionDoctor")}
-          />
-          <ButtonRegister
-            title="Patient"
-            onPress={() => navigation.navigate("inscriptionPatient")}
-          />
-        </View>
+    <View style={styles.container}>
+      <Text style={styles.title}>Bienvenue !</Text>
+      <View style={styles.optionsContainer}>
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => navigation.navigate("login")}
+        >
+          <FontAwesome5 name="user-md" size={80} color="#00bfa6" />
+          <Text style={styles.optionText}>Docteur</Text>
+        </TouchableOpacity>
+        <View style={styles.space}></View>
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => navigation.navigate("loginPatient")}
+        >
+          <FontAwesome5 name="user-injured" size={80} color="#00bfa6" />
+          <Text style={styles.optionText}>Patient</Text>
+        </TouchableOpacity>
       </View>
-    </>
+      <Text style={styles.subtitle}>Pas encore de compte?</Text>
+      <View style={styles.optionsContainer}>
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => navigation.navigate("inscriptionDoctor")}
+        >
+          <FontAwesome5 name="user-md" size={80} color="#00bfa6" />
+          <Text style={styles.optionText}>Inscription Docteur</Text>
+        </TouchableOpacity>
+        <View style={styles.space}></View>
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => navigation.navigate("inscriptionPatient")}
+        >
+          <FontAwesome5 name="user-injured" size={80} color="#00bfa6" />
+          <Text style={styles.optionText}>Inscription Patient</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  optionsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  option: {
+    alignItems: "center",
+  },
+  optionText: {
+    fontSize: 18,
+    marginTop: 10,
+    color: "#00bfa6",
+  },
+  subtitle: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  space: {
+    width: 20,
+    height: 20,
+  },
+});
 
 export default Login;

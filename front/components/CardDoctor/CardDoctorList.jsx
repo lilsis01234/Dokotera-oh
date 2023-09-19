@@ -1,83 +1,165 @@
-import { s } from "./CardDoctor.style";
 import React, { useEffect, useState } from "react";
-import { Image, Text, View, TouchableOpacity } from "react-native";
-import axios from "axios"; // Import axios for making API requests
-import AppointmentForm from "../ListeRendezVous/AjoutRendezVous";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import axios from "axios";
+
 
 const CardDoctors = ({ navigation }) => {
   const token = localStorage.getItem('token');
-  const idDoctor = localStorage.getItem('id');
+  const monid = localStorage.getItem('id');
   
+  const etat = localStorage.getItem('etat');
+  console.log(monid)
   if (!token) {
     navigation.navigate('accueil');
-    return null; // Ne rend rien tant que la redirection n'est pas effectuée
+    return null;
   }
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    // Make an API request to fetch data from the backend
-    axios.get('http://127.0.0.1:3000/doctor/allDoctor') // Add "http://" before the URL
+    axios.get('http://127.0.0.1:3000/doctor/allDoctor')
       .then((response) => {
-        // Store the fetched data in the state
         setDoctors(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []); // Empty dependency array ensures the effect runs only once, when the component mounts
+  }, []);
 
-  console.log(doctors)
   return (
-    <View>
-    <Text>Tous les docteurs</Text>
-    <TouchableOpacity
-              onPress={() => {
-              navigation.navigate('profil', { doctorId: idDoctor });
-    }}
-    >
-    <Text>Voir mon profil</Text>
-    </TouchableOpacity>
-    <View style={s.form}>
+    <View style={styles.container}>
+
+      <TouchableOpacity
+        style={styles.profileButton}
+        onPress={() => {
+          navigation.navigate('profil', { doctorId: monid });
+        }}
+      >
+        <Text style={styles.profileButtonText}>Voir mon profil</Text>
+      </TouchableOpacity>
+
+
+      {etat === "docteur"? (
+        <TouchableOpacity
+        style={styles.profileButton}
+         onPress={() => {
+         navigation.navigate('listerendezVousDoctor', { doctorId: monid });
+          }}
+        >
+          <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
+        </TouchableOpacity>
+
+      ):(
+        <TouchableOpacity
+        style={styles.profileButton}
+        onPress={() => {
+          navigation.navigate('listerendezVousPatient', { PatientId: monid });
+        }}
+      >
+        <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
+      </TouchableOpacity>
+      )}
+
+
+      <Text style={styles.header}>Tous les docteurs</Text>
       {doctors.map((doctor, index) => (
-        <View key={index} style={s.form1}>
-          <View style={s.image} ClassName="flex-row justify-center -mt-14">
-            <Image style={s.photo} source={{ uri: `http://localhost:3000/uploads/${doctor.photo}` }} />
+        <View key={index} style={styles.doctorCard}>
+          <View style={styles.imageContainer}>
+            <Image style={styles.profileImage} source={{ uri: `http://localhost:3000/uploads/${doctor.photo}` }} />
           </View>
-          <Text style={s.text}>
-            <Text style={s.text2}> Name </Text> {doctor.name} {doctor.firstname}
-            <br />
-            <Text style={s.text2}> Spécialité:</Text> {doctor.speciality}
-            <br />
-            <TouchableOpacity
-              onPress={() => {
-              navigation.navigate('callScreen', { doctorId: doctor._id });
-           }}
-            >
-          <Text>Appeler maintenant</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-              onPress={() => {
-              navigation.navigate('profil', { doctorId: doctor._id });
-           }}
-            >
-          <Text>Voir son profil</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-              onPress={() => {
-              navigation.navigate('rendezVous', { doctorId: doctor._id });
-           }}
-          >
-          <Text>Prendre un rendez-vous</Text>
-          </TouchableOpacity>
-
+          <Text style={styles.name}>
+            {doctor.name} {doctor.firstname}
           </Text>
+          <Text style={styles.speciality}>Spécialité: {doctor.speciality}</Text>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate('callScreen', { doctorId: doctor._id });
+            }}
+          >
+            <Text style={styles.actionButtonText}>Appeler maintenant</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate('profil', { doctorId: doctor._id });
+            }}
+          >
+            <Text style={styles.actionButtonText}>Voir son profil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate('rendezVous', { doctorId: doctor._id });
+            }}
+          >
+            <Text style={styles.actionButtonText}>Prendre un rendez-vous</Text>
+          </TouchableOpacity>
         </View>
       ))}
-    </View>
     </View>
   );
 }
 
-export default CardDoctors
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  profileButton: {
+    backgroundColor: "#00897b",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  profileButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  doctorCard: {
+    backgroundColor: "#00bfa6",
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
+  },
+  imageContainer: {
+    borderRadius: 50,
+    overflow: "hidden",
+    marginBottom: 10,
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  speciality: {
+    fontSize: 16,
+    fontStyle: "italic",
+    marginBottom: 10,
+  },
+  actionButton: {
+    backgroundColor: "#00897b",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 5,
+  },
+  actionButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+});
+
+export default CardDoctors;

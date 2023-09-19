@@ -16,6 +16,7 @@ import AppointmentsScreen from './components/VisioConference/VisioConference';
 import Login from "./screens/Login";
 import UserProfile from "./components/Profil/Profil";
 import AppointmentForm from "./components/ListeRendezVous/AjoutRendezVous";
+import AppointmentListDoctor from "./components/ListeRendezVous/ListeRendezVousDoctor";
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -31,7 +32,8 @@ const App = () => {
         <Stack.Screen name="callScreen" component={AppointmentsScreen} initialParams={{ doctorId: null }}/>  
         <Stack.Screen name="profil" component={UserProfile} initialParams={{ doctorId: null }}/>  
         <Stack.Screen name="rendezVous" component={AppointmentForm} initialParams={{ doctorId: null }}/>  
-
+        <Stack.Screen name="listerendezVousDoctor" component={AppointmentListDoctor} initialParams={{ doctorId: null }}/>  
+        <Stack.Screen name="listerendezVousPatient" component={AppointmentForm} initialParams={{ PatientId: null }}/>  
       </Stack.Navigator>
     </NavigationContainer>
   );

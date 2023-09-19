@@ -7,10 +7,12 @@ import {
   Alert,
   Picker,
   Image,
-  Button
+  Button,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 import axios from "axios";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 
 const RegisterDoctor = () => {
@@ -25,47 +27,42 @@ const RegisterDoctor = () => {
   const [roles, setRoles] = useState([]);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:3000/role/getRole")
-      .then((response) => {
-        setRoles(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  const [photo, setPhoto] = useState(null);
 
-const [photo, setPhoto] = useState(null);
-
-const pickImage = async () => {
+  const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
-      base64:false
+      base64: false,
     });
 
-    console.log(result);
-
-    if (!result.canceled) {
-        setPhoto(result.assets[0].uri);
+    if (!result.cancelled) {
+      setPhoto(result.assets[0].uri);
     }
   };
 
-
   const handleSubmit = async () => {
-    if (!name || !firstname || !contact || !speciality || !experience || !email || !password || !selectedRole) {
+    if (
+      !name ||
+      !firstname ||
+      !contact ||
+      !speciality ||
+      !experience ||
+      !email ||
+      !password ||
+      !selectedRole
+    ) {
       Alert.alert("Error", "Please fill in all fields");
       return;
     }
-  
+
     try {
       // Convert the selected image to a blob
       const response = await fetch(photo);
       const blob = await response.blob();
-  
+
       // Prepare the data to be sent to the server for registration
       const formData = new FormData();
       formData.append("name", name);
@@ -77,16 +74,18 @@ const pickImage = async () => {
       formData.append("password", password);
       formData.append("Role", selectedRole);
       formData.append("photo", blob, "photo.jpg");
-  
-      console.log(formData);
-  
+
       // Send the POST request to the backend
-      const res = await axios.post("http://127.0.0.1:3000/doctor/inscriptionDoctor", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
+      const res = await axios.post(
+        "http://127.0.0.1:3000/doctor/inscriptionDoctor",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       console.log(res.data);
       Alert.alert("Success", "Registration successful");
       navigation.navigate("accueil");
@@ -96,96 +95,137 @@ const pickImage = async () => {
     }
   };
 
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:3000/role/getRole")
+      .then((response) => {
+        setRoles(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
-    <View style={{ flex: 1, backgroundColor: "white", paddingHorizontal: 20, paddingTop: 20 }}>
-      <Text style={{ fontSize: 30 }}>Sign Up</Text>
-      <View style={{ marginTop: 20 }}>
-        <Text>Photo:</Text>
-        {photo && (
-          <Image
-            source={{ uri: photo }}
-            style={{ width: 100, height: 100 }}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Inscription Médecin</Text>
+      <TouchableOpacity
+        style={styles.imageButton}
+        onPress={pickImage}
+      >
+        <Text style={styles.imageButtonText}>Sélectionner une photo</Text>
+      </TouchableOpacity>
+      {photo && (
+        <Image
+          source={{ uri: photo }}
+          style={styles.imagePreview}
+        />
+      )}
+      <TextInput
+        style={styles.input}
+        placeholder="Nom"
+        onChangeText={(text) => setName(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Prénom"
+        onChangeText={(text) => setFirstname(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Contact"
+        onChangeText={(text) => setContact(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Spécialité"
+        onChangeText={(text) => setSpeciality(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Expérience"
+        onChangeText={(text) => setExperience(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        onChangeText={(text) => setEmail(text)}
+      />
+      <TextInput
+        style={styles.input}
+        secureTextEntry
+        placeholder="Mot de passe"
+        onChangeText={(text) => setPassword(text)}
+      />
+      <Picker
+        style={styles.input}
+        selectedValue={selectedRole}
+        onValueChange={(itemValue, itemIndex) => setSelectedRole(itemValue)}
+      >
+        <Picker.Item label="Sélectionnez un rôle" value="" />
+        {roles.map((role) => (
+          <Picker.Item
+            key={role._id}
+            label={role.RoleTitle}
+            value={role._id}
           />
-        )}
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
-        
-        {/* Rest of your form */}
-        
-
-        <Text>Nom :</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="raharimanana"
-          onChangeText={(text) => setName(text)}
-        />
-        <Text>Prénoms :</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="fabiola"
-          onChangeText={(text) => setFirstname(text)}
-        />
-        <Text>Contact:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="contact"
-          onChangeText={(text) => setContact(text)}
-        />
-        <Text>Speciality:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="specialité"
-          onChangeText={(text) => setSpeciality(text)}
-        />
-        <Text>Experience:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="experience"
-          onChangeText={(text) => setExperience(text)}
-        />
-        <Text>Email Address:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="email"
-          onChangeText={(text) => setEmail(text)}
-        />
-        <Text>Password:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          secureTextEntry
-          placeholder="mot de passe"
-          onChangeText={(text) => setPassword(text)}
-        />
-
-        <Text>Role:</Text>
-        <Picker
-          style={{
-            padding: 10,
-            backgroundColor: "lightgray",
-            borderRadius: 10,
-            marginBottom: 10,
-          }}
-          selectedValue={selectedRole}
-          onValueChange={(itemValue, itemIndex) => setSelectedRole(itemValue)}
-        >
-          <Picker.Item label="Select a Role" value="" />
-          {roles.map((role) => (
-            <Picker.Item
-              key={role._id}
-              label={role.RoleTitle}
-              value={role._id}
-            />
-          ))}
-        </Picker>
-
-        <TouchableOpacity
-          style={{ backgroundColor: "blue", borderRadius: 20, padding: 15, alignItems: "center" }}
-          onPress={handleSubmit}
-        >
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        ))}
+      </Picker>
+      <TouchableOpacity
+        style={styles.registerButton}
+        onPress={handleSubmit}
+      >
+        <Text style={styles.registerButtonText}>S'inscrire</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
-export default RegisterDoctor
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 20,
+  },
+  title: {
+    fontSize: 30,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  imageButton: {
+    backgroundColor: "#00bfa6",
+    borderRadius: 10,
+    padding: 15,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  imageButtonText: {
+    color: "white",
+    fontSize: 18,
+  },
+  imagePreview: {
+    width: "100%",
+    height: 200,
+    resizeMode: "cover",
+    marginBottom: 20,
+  },
+  input: {
+    padding: 10,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  registerButton: {
+    backgroundColor: "#00bfa6",
+    borderRadius: 20,
+    padding: 15,
+    alignItems: "center",
+  },
+  registerButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+});
+
+export default RegisterDoctor;

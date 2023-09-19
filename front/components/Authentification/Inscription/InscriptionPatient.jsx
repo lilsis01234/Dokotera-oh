@@ -8,6 +8,8 @@ import {
   Picker,
   Image,
   Button,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
@@ -111,103 +113,136 @@ const RegisterPatient = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white", paddingHorizontal: 20, paddingTop: 20 }}>
-      <Text style={{ fontSize: 30 }}>Sign Up</Text>
-      <View style={{ marginTop: 20 }}>
-        {/* ...other input fields... */}
-        
-        {/* Custom date input field */}
-       
-        <Text>Photo:</Text>
-        {photo && (
-          <Image
-            source={{ uri: photo }}
-            style={{ width: 100, height: 100 }}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Inscription Patient</Text>
+      <TouchableOpacity
+        style={styles.imageButton}
+        onPress={pickImage}
+      >
+        <Text style={styles.imageButtonText}>Sélectionner une photo</Text>
+      </TouchableOpacity>
+      {photo && (
+        <Image
+          source={{ uri: photo }}
+          style={styles.imagePreview}
+        />
+      )}
+      <TextInput
+        style={styles.input}
+        placeholder="Nom"
+        onChangeText={(text) => setName(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Prénom"
+        onChangeText={(text) => setFirstname(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Contact"
+        onChangeText={(text) => setContact(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Poids"
+        onChangeText={(text) => setWeight(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Adresse"
+        onChangeText={(text) => setAddress(text)}
+      />
+      <Text style={styles.inputLabel}>Date de naissance:</Text>
+      <TextInput
+        type="date"
+        style={styles.input}
+        onChangeText={(text) => setDateOfBirth(text)} // Set the date as a string
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        onChangeText={(text) => setEmail(text)}
+      />
+      <TextInput
+        style={styles.input}
+        secureTextEntry
+        placeholder="Mot de passe"
+        onChangeText={(text) => setPassword(text)}
+      />
+      <Picker
+        style={styles.input}
+        selectedValue={selectedRole}
+        onValueChange={(itemValue, itemIndex) => setSelectedRole(itemValue)}
+      >
+        <Picker.Item label="Sélectionnez un rôle" value="" />
+        {roles.map((role) => (
+          <Picker.Item
+            key={role._id}
+            label={role.RoleTitle}
+            value={role._id}
           />
-        )}
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
-
-        <Text>Nom :</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="raharimanana"
-          onChangeText={(text) => setName(text)}
-        />
-        <Text>Prénoms :</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="fabiola"
-          onChangeText={(text) => setFirstname(text)}
-        />
-         <Text>Date de naissance:</Text>
-        <input
-          type="date"
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          onChange={(e) => setDateOfBirth(e.target.value)} // Set the date as a string
-        />
-        <Text>Contact:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="contact"
-          onChangeText={(text) => setContact(text)}
-        />
-        <Text>Poids:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="poids"
-          onChangeText={(text) => setWeight(text)}
-        />
-        <Text>Adresse:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="Adresse"
-          onChangeText={(text) => setAddress(text)}
-        />
-        
-        <Text>Email Address:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="email"
-          onChangeText={(text) => setEmail(text)}
-        />
-        <Text>Password:</Text>
-        <TextInput
-          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          secureTextEntry
-          placeholder="mot de passe"
-          onChangeText={(text) => setPassword(text)}
-        />
-
-        <Text>Role:</Text>
-        <Picker
-          style={{
-            padding: 10,
-            backgroundColor: "lightgray",
-            borderRadius: 10,
-            marginBottom: 10,
-          }}
-          selectedValue={selectedRole}
-          onValueChange={(itemValue, itemIndex) => setSelectedRole(itemValue)}
-        >
-          <Picker.Item label="Select a Role" value="" />
-          {roles.map((role) => (
-            <Picker.Item
-              key={role._id}
-              label={role.RoleTitle}
-              value={role._id}
-            />
-          ))}
-        </Picker>
-
-        <TouchableOpacity
-          style={{ backgroundColor: "blue", borderRadius: 20, padding: 15, alignItems: "center" }}
-          onPress={handleSubmit}
-        >
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        ))}
+      </Picker>
+      <TouchableOpacity
+        style={styles.registerButton}
+        onPress={handleSubmit}
+      >
+        <Text style={styles.registerButtonText}>S'inscrire</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 20,
+  },
+  title: {
+    fontSize: 30,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  imageButton: {
+    backgroundColor: "#00bfa6",
+    borderRadius: 10,
+    padding: 15,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  imageButtonText: {
+    color: "white",
+    fontSize: 18,
+  },
+  imagePreview: {
+    width: "100%",
+    height: 200,
+    resizeMode: "cover",
+    marginBottom: 20,
+  },
+  input: {
+    padding: 10,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  inputLabel: {
+    fontSize: 16,
+    marginBottom: 5,
+    marginLeft: 5,
+  },
+  registerButton: {
+    backgroundColor: "#00bfa6",
+    borderRadius: 20,
+    padding: 15,
+    alignItems: "center",
+  },
+  registerButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+});
 
 export default RegisterPatient;
