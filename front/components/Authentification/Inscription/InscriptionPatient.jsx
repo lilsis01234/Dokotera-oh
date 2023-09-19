@@ -7,22 +7,97 @@ import {
   Alert,
   Picker,
   Image,
-  Button
+  Button,
 } from "react-native";
 import axios from "axios";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
 
-
-  const RegisterPatient = () => {
+const RegisterPatient = () => {
   const [name, setName] = useState("");
   const [firstname, setFirstname] = useState("");
   const [contact, setContact] = useState("");
-  const [speciality, setSpeciality] = useState("");
-  const [experience, setExperience] = useState("");
+  const [weight, setWeight] = useState("");
+  const [address, setAddress] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(""); // Change to a string
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [roles, setRoles] = useState([]);
+  const navigation = useNavigation();
+
+  const [photo, setPhoto] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+      base64: false,
+    });
+
+    if (!result.cancelled) {
+      setPhoto(result.assets[0].uri);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (
+      !name ||
+      !firstname ||
+      !contact ||
+      !dateOfBirth ||
+      !address ||
+      !email ||
+      !password ||
+      !selectedRole
+    ) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    try {
+      // Convert the selected image to a blob
+      const response = await fetch(photo);
+      const blob = await response.blob();
+
+      // Prepare the data to be sent to the server for registration
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("firstname", firstname);
+      formData.append("contact", contact);
+      formData.append("weight", weight);
+      formData.append("address", address);
+
+      // Convert dateOfBirth string to a Date object
+      const dateOfBirthDate = new Date(dateOfBirth);
+      formData.append("dateOfBirth", dateOfBirthDate);
+
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("Role", selectedRole);
+      formData.append("photo", blob, "photo.jpg");
+
+      // Send the POST request to the backend
+      const res = await axios.post(
+        "http://127.0.0.1:3000/patient/inscriptionPatient",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(res.data);
+      Alert.alert("Success", "Registration successful");
+      navigation.navigate("accueil");
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Registration failed");
+    }
+  };
 
   useEffect(() => {
     axios
@@ -35,70 +110,14 @@ import * as ImagePicker from 'expo-image-picker';
       });
   }, []);
 
-const [photo, setPhoto] = useState(null);
-
-const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-      base64:false
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-        setPhoto(result.assets[0].uri);
-    }
-  };
-
-
-  const handleSubmit = async () => {
-    if (!name || !firstname || !contact || !speciality || !experience || !email || !password || !selectedRole) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-  
-    try {
-      // Convert the selected image to a blob
-      const response = await fetch(photo);
-      const blob = await response.blob();
-  
-      // Prepare the data to be sent to the server for registration
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("firstname", firstname);
-      formData.append("contact", contact);
-      formData.append("speciality", speciality);
-      formData.append("experience", experience);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("Role", selectedRole);
-      formData.append("photo", blob, "photo.jpg");
-  
-      console.log(formData);
-  
-      // Send the POST request to the backend
-      const res = await axios.post("http://127.0.0.1:3000/patient/inscriptionPatient", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
-      console.log(res.data);
-      Alert.alert("Success", "Registration successful");
-      navigation.navigate("accueil");
-    } catch (error) {
-      console.error(error);
-      Alert.alert("Error", "Registration failed");
-    }
-  };
-
   return (
     <View style={{ flex: 1, backgroundColor: "white", paddingHorizontal: 20, paddingTop: 20 }}>
       <Text style={{ fontSize: 30 }}>Sign Up</Text>
       <View style={{ marginTop: 20 }}>
+        {/* ...other input fields... */}
+        
+        {/* Custom date input field */}
+       
         <Text>Photo:</Text>
         {photo && (
           <Image
@@ -107,9 +126,6 @@ const pickImage = async () => {
           />
         )}
         <Button title="Pick an image from camera roll" onPress={pickImage} />
-        
-        {/* Rest of your form */}
-        
 
         <Text>Nom :</Text>
         <TextInput
@@ -123,24 +139,31 @@ const pickImage = async () => {
           placeholder="fabiola"
           onChangeText={(text) => setFirstname(text)}
         />
+         <Text>Date de naissance:</Text>
+        <input
+          type="date"
+          style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
+          onChange={(e) => setDateOfBirth(e.target.value)} // Set the date as a string
+        />
         <Text>Contact:</Text>
         <TextInput
           style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
           placeholder="contact"
           onChangeText={(text) => setContact(text)}
         />
-        <Text>Speciality:</Text>
+        <Text>Poids:</Text>
         <TextInput
           style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="specialité"
-          onChangeText={(text) => setSpeciality(text)}
+          placeholder="poids"
+          onChangeText={(text) => setWeight(text)}
         />
-        <Text>Experience:</Text>
+        <Text>Adresse:</Text>
         <TextInput
           style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
-          placeholder="experience"
-          onChangeText={(text) => setExperience(text)}
+          placeholder="Adresse"
+          onChangeText={(text) => setAddress(text)}
         />
+        
         <Text>Email Address:</Text>
         <TextInput
           style={{ padding: 10, backgroundColor: "lightgray", borderRadius: 10, marginBottom: 10 }}
@@ -187,4 +210,4 @@ const pickImage = async () => {
   );
 };
 
-export default RegisterPatient
+export default RegisterPatient;

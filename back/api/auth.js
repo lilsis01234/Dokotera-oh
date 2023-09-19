@@ -10,6 +10,7 @@ const CompteDoctor = require('../models/CompteDoctor')
 
 const bcrypt = require('bcrypt')
 const ComptePatient = require('../models/ComptePatient')
+
 router.post('/loginDoctor', async (req, res) => {
     try {
         const compte = await CompteDoctor.findOne({ email: req.body.email })
@@ -36,7 +37,7 @@ router.post('/loginDoctor', async (req, res) => {
 
         res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 86400000 });
 
-        res.status(200).json({ id: compte.id, role: role, token: token, etat: etat, doctorId: doctorId });
+        res.status(200).json({ id: compte.id, role: role, token: token, etat: etat, Id: doctorId });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Erreur serveur interne' });
@@ -71,7 +72,7 @@ router.post('/loginPatient', async (req, res) => {
 
         res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 86400000 });
 
-        res.status(200).json({ id: compte.id, role: role, token: token, etat: etat, patientId: patientId });
+        res.status(200).json({ id: compte.id, role: role, token: token, etat: etat, Id: patientId });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Erreur serveur interne' });
