@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import * as ImagePicker from 'expo-image-picker';
-
+import { useNavigation } from "@react-navigation/native";
 
 const RegisterDoctor = () => {
   const [name, setName] = useState("");
@@ -23,6 +23,7 @@ const RegisterDoctor = () => {
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [roles, setRoles] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios

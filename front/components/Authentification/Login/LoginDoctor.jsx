@@ -19,7 +19,7 @@ const LoginDoctorScreen = ({ navigation }) => {
         console.log("Login Response Data:", res.data);
 
         localStorage.setItem('token',res.data.token)
-        localStorage.setItem('id',res.data.doctorId)
+        localStorage.setItem('id',res.data.Id)
         localStorage.setItem('etat',res.data.etat)
 
         navigation.navigate("home");
