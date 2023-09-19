@@ -1,6 +1,6 @@
 import { s } from "./CardDoctor.style";
 import React, { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, TouchableOpacity } from "react-native";
 import axios from "axios"; // Import axios for making API requests
 
 const CardDoctors=()=> {
@@ -35,6 +35,13 @@ const CardDoctors=()=> {
             <Text style={s.text2}> specialité </Text>
             {doctor.contact}
           </Text>
+          <TouchableOpacity
+              onPress={() => {
+              navigation.navigate('callScreen', { doctorId: doctor._id });
+           }}
+    >
+          <Text>Appeler</Text>
+          </TouchableOpacity>
         </View>
       ))}
     </View>

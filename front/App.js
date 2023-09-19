@@ -9,6 +9,7 @@ import RegisterDoctor from './components/Authentification/Inscription/Inscriptio
 
 import LoginDoctorScreen from './components/Authentification/Login/LoginDoctor';
 import LoginPatientScreen from './components/Authentification/Login/LoginPatient';
+import AppointmentsScreen from './components/VisioConference/VisioConference';
 
 const Stack = createStackNavigator();
 
@@ -18,12 +19,10 @@ const App = () => {
       <Stack.Navigator initialRouteName="login">
         <Stack.Screen name="home" component={CardDoctors} />
         <Stack.Screen name="inscriptionDoctor" component={RegisterDoctor} />
-        {/* <Stack.Screen name="inscriptionPatient" component={} /> */}
         <Stack.Screen name="inscriptionPatient" component={RegisterPatient} />
         <Stack.Screen name="login" component={LoginDoctorScreen} />  
         <Stack.Screen name="loginPatient" component={LoginPatientScreen} />   
-
- 
+        <Stack.Screen name="callScreen" component={AppointmentsScreen} initialParams={{ doctorId: null }}/>   
       </Stack.Navigator>
     </NavigationContainer>
   );
