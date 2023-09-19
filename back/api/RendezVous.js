@@ -5,14 +5,15 @@ const RendezVous = require('../models/Rendezvous');
 // Route pour créer un rendez-vous (Create)
 router.post('/rendezvous', async (req, res) => {
     try {
-        const { patient, docteur, contenu, date } = req.body;
+        const { patient, docteur, contenu, date,heureStart } = req.body;
 
         const newRendezVous = new RendezVous({
             patient,
             docteur,
             contenu,
             date,
-            approbation:0
+            heureStart,
+            approbation:0,
         });
 
         const savedRendezVous = await newRendezVous.save();
@@ -23,21 +24,12 @@ router.post('/rendezvous', async (req, res) => {
     }
 });
 
-// Route pour obtenir tous les rendez-vous (Read)
-router.get('/rendezvous', async (req, res) => {
-    try {
-        const rendezvous = await RendezVous.find().populate('patient docteur');
-        res.json(rendezvous);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erreur lors de la récupération des rendez-vous.' });
-    }
-});
+
 
 // Route pour obtenir un rendez-vous par son ID (Read)
 router.get('/rendezvous/:id', async (req, res) => {
     try {
-        const rendezvous = await RendezVous.findById(req.params.id).populate('patient docteur');
+        const rendezvous = await RendezVous.findById(req.params.id).populate('docteur');
         if (!rendezvous) {
             return res.status(404).json({ error: 'Rendez-vous non trouvé.' });
         }
@@ -48,6 +40,7 @@ router.get('/rendezvous/:id', async (req, res) => {
     }
 });
 
+//Les rendez-vous d'un docteur particulier
 router.get('/rendezvous/:idDocteur', async (req, res) => {
     const doc = req.params.idDocteur
     try {
