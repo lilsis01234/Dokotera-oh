@@ -11,7 +11,7 @@ const Login = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.loginText}>Se connecter en temps que</Text>
+          <Text style={styles.loginText}>Se connecter en tant que</Text>
         </View>
         <View style={styles.buttonContainer}>
           <ButtonRegister
