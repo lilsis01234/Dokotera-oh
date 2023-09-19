@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from "react-native";
 import axios from "axios";
+import { styles } from "./LoginGabi.style";
+import { style } from "../../Input/Input.style";
+import COLORS from "../../../theme";
 
 const LoginPatientScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -8,7 +11,7 @@ const LoginPatientScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://127.0.0.1:3000/auth/loginPatient", {
+      const response = await axios.post("http://127.0.0.1:3000/auth/loginPatient", {
         email,
         password,
       });
