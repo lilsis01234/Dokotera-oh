@@ -3,15 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Image, Text, View, TouchableOpacity } from "react-native";
 import axios from "axios"; // Import axios for making API requests
 
-const CardDoctors=()=> {
-
-  const idDoctor = localStorage.getItem('id');
-  console.log(idDoctor)
-
+const CardDoctors = ({ navigation }) => {
   const token = localStorage.getItem('token');
-  console.log(token)
-  if(!token){
-    navigation.navigate("accueil")
+  const idDoctor = localStorage.getItem('id');
+  
+  if (!token) {
+    navigation.navigate('accueil');
+    return null; // Ne rend rien tant que la redirection n'est pas effectuée
   }
   const [doctors, setDoctors] = useState([]);
 
@@ -29,6 +27,15 @@ const CardDoctors=()=> {
 
   console.log(doctors)
   return (
+    <View>
+    <Text>Tous les docteurs</Text>
+    <TouchableOpacity
+              onPress={() => {
+              navigation.navigate('profil', { doctorId: idDoctor });
+    }}
+    >
+    <Text>Voir mon profil</Text>
+    </TouchableOpacity>
     <View style={s.form}>
       {doctors.map((doctor, index) => (
         <View key={index} style={s.form1}>
@@ -44,12 +51,20 @@ const CardDoctors=()=> {
               onPress={() => {
               navigation.navigate('callScreen', { doctorId: doctor._id });
            }}
-    >
+            >
           <Text>Appeler maintenant</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+              onPress={() => {
+              navigation.navigate('profil', { doctorId: doctor._id });
+           }}
+            >
+          <Text>Voir son profil</Text>
           </TouchableOpacity>
           </Text>
         </View>
       ))}
+    </View>
     </View>
   );
 }
