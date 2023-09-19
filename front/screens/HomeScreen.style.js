@@ -23,12 +23,12 @@ export const styles = StyleSheet.create({
 
   inputSearch: {
     flex: 1,
-    fontWeight: 500,
+    fontWeight: "lighter",
     color: COLORS.darkBlue,
     outlineWidth: 0,
     paddingLeft: 10,
   },
-  
+
   textInput: {
     padding: 5,
     borderRadius: 20,
