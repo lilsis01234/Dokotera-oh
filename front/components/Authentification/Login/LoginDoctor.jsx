@@ -6,9 +6,6 @@ const LoginDoctorScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const[token,setToken] = useState("");
-  const[id,setId] = useState("");
-  const[etat,setEtat] = useState("");
 
 
   const handleLogin = async () => {
@@ -19,10 +16,10 @@ const LoginDoctorScreen = ({ navigation }) => {
       });
 
       if (res.status === 200) {
-        console.log("Login Response Data:", res.data.token);
+        console.log("Login Response Data:", res.data);
 
         localStorage.setItem('token',res.data.token)
-        localStorage.setItem('id',res.data.id)
+        localStorage.setItem('id',res.data.doctorId)
         localStorage.setItem('etat',res.data.etat)
 
         navigation.navigate("home");
