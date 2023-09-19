@@ -1,10 +1,16 @@
 import { s } from "./CardDoctor.style";
 import React, { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, TouchableOpacity } from "react-native";
 import axios from "axios"; // Import axios for making API requests
 
-const CardDoctors=()=> {
-
+const CardDoctors = ({ navigation }) => {
+  const token = localStorage.getItem('token');
+  const idDoctor = localStorage.getItem('id');
+  
+  if (!token) {
+    navigation.navigate('accueil');
+    return null; // Ne rend rien tant que la redirection n'est pas effectuée
+  }
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
@@ -21,6 +27,15 @@ const CardDoctors=()=> {
 
   console.log(doctors)
   return (
+    <View>
+    <Text>Tous les docteurs</Text>
+    <TouchableOpacity
+              onPress={() => {
+              navigation.navigate('profil', { doctorId: idDoctor });
+    }}
+    >
+    <Text>Voir mon profil</Text>
+    </TouchableOpacity>
     <View style={s.form}>
       {doctors.map((doctor, index) => (
         <View key={index} style={s.form1}>
@@ -30,13 +45,26 @@ const CardDoctors=()=> {
           <Text style={s.text}>
             <Text style={s.text2}> Name </Text> {doctor.name} {doctor.firstname}
             <br />
-            <Text style={s.text2}> firstname:</Text> {doctor.speciality}
+            <Text style={s.text2}> Spécialité:</Text> {doctor.speciality}
             <br />
-            <Text style={s.text2}> specialité </Text>
-            {doctor.contact}
+            <TouchableOpacity
+              onPress={() => {
+              navigation.navigate('callScreen', { doctorId: doctor._id });
+           }}
+            >
+          <Text>Appeler maintenant</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+              onPress={() => {
+              navigation.navigate('profil', { doctorId: doctor._id });
+           }}
+            >
+          <Text>Voir son profil</Text>
+          </TouchableOpacity>
           </Text>
         </View>
       ))}
+    </View>
     </View>
   );
 }

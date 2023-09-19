@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
 
   loginText: {
-    fontSize: 45,
+    fontSize: 40,
     // color: 'white',
     fontWeight: "lighter",
     marginBottom: 50,

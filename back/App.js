@@ -23,7 +23,14 @@ const bodyParser = require('express').json
 app.use(bodyParser())
 app.use(cors());
 
+app.use(cors({
+    origin: 'http://localhost:19006', // Autorisez les demandes depuis votre application React Native
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Autorisez l'envoi de cookies (si nécessaire)
+  }));
+
 const PORT = process.env.PORT || 3000;
+
 
 app.use('/patient', PatientRouter)
 app.use('/doctor', DoctorRouter)

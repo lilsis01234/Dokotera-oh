@@ -2,11 +2,16 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const Doctor = require('../models/Doctor');
+const Patient = require('../models/Patient');
 const CompteDoctor = require('../models/CompteDoctor');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const multer = require('multer');
 const Rolemodel = require('../models/Role');
+const fs = require('fs'); // Node.js File System module
+const path = require('path'); 
+const mongoose = require('mongoose');
+
 
 // Configurez Multer pour spécifier où stocker les fichiers téléchargés
 const storage = multer.diskStorage({
@@ -20,10 +25,15 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({   storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5, // 5 MB limit (adjust as needed)
+    }, });
 
 // Route d'inscription du docteur avec téléchargement de la photo
-router.post('/inscriptionDoctor', upload.single('photo'), async (req, res) => {
+router.post('/inscriptionDoctor', upload.single('photo'),async (req, res) => {
+    console.log("Request Body:", req.body);
+    console.log("Request File:", req.file);
     let { name, firstname, contact, speciality, experience, email, password, Role } = req.body;
 
     if (name == "" || firstname == "" || contact == "" || speciality == "" || experience == "" || email == "" || Role == "" || password == "") {
@@ -51,14 +61,15 @@ router.post('/inscriptionDoctor', upload.single('photo'), async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
+        
 
         const newDoctor = new Doctor({
             name,
-            firstname,
+            firstName:firstname,
             contact,
             speciality,
             experience,
-            photo: req.file.filename // Enregistrez le nom du fichier téléchargé dans la propriété 'photo'
+            photo: req.file.filename// Enregistrez le nom du fichier téléchargé dans la propriété 'photo'
         });
 
         const savedDoctor = await newDoctor.save();
@@ -117,5 +128,39 @@ router.get('/allDoctor',(req,res)=>{
         res.status(500).json({ error: 'Erreur lors de la récupération des données.' });
     });
 })
+
+
+router.get('/profil/:id', async (req, res) => {
+    const id = req.params.id;
+
+    // Check if the ID is in a valid ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    try {
+        // Check if it's a doctor's ID
+        const doctor = await Doctor.findById(id);
+
+        if (doctor) {
+            // If the ID belongs to a doctor, return the doctor's information
+            return res.json(doctor);
+        }
+
+        // If it's not a doctor's ID, check if it's a patient's ID
+        const patient = await Patient.findById(id);
+
+        if (patient) {
+            // If the ID belongs to a patient, return the patient's information
+            return res.json(patient);
+        }
+
+        // If the ID doesn't belong to either a doctor or a patient, return a 404 response
+        return res.status(404).json({ message: 'User not found' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 module.exports = router
 

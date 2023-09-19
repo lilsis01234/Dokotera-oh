@@ -11,18 +11,32 @@ const Login = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.loginText}>Se connecter en temps que</Text>
+          <Text style={styles.loginText}>Se connecter en tant que</Text>
         </View>
         <View style={styles.buttonContainer}>
           <ButtonRegister
             title="Docteur"
-            onPress={() => navigation.navigate("LoginDoctorScreen")}
+            onPress={() => navigation.navigate("login")}
           />
           <ButtonRegister
             title="Patient"
-            onPress={() => navigation.navigate("LoginPatientScreen")}
+            onPress={() => navigation.navigate("loginPatient")}
           />
         </View>
+        
+        {/* <View style={styles.textContainer}>
+          <Text style={styles.loginText}>Pas encore de compte ? S'inscrire en tant que </Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <ButtonRegister
+            title="Docteur"
+            onPress={() => navigation.navigate("inscriptionDoctor")}
+          />
+          <ButtonRegister
+            title="Patient"
+            onPress={() => navigation.navigate("inscriptionPatient")}
+          />
+        </View> */}
       </View>
     </>
   );

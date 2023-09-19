@@ -3,6 +3,10 @@
     "name": "Native",
     "slug": "Native",
     "version": "1.0.0",
+    "permissions": [
+      "CAMERA",
+      "RECORD_AUDIO"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
