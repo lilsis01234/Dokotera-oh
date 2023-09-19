@@ -5,7 +5,7 @@ export const style = StyleSheet.create({
   label: {
     marginVertical: 5,
     fontSize: 20,
-    fontWeight: 500,
+    fontWeight: "lighter",
     color: COLORS.gray,
   },
   inputContainer: {
