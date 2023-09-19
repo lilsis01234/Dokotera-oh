@@ -1,4 +1,11 @@
-import React from 'react';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LoginDoctorScreen from "./screens/LoginDoctorScreen";
+import LoginPatientScreen from "./screens/LoginPatientScreen";
+import RegisterScreen from "./screens/RegisterPatientScreen";
+import RegisterDoctorScreen from "./screens/RegisterDoctorScreen";
+import HomeScreen from "./screens/HomeScreen";
+import Login from "./screens/Login";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
