@@ -7,6 +7,9 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const multer = require('multer');
 const Rolemodel = require('../models/Role');
+const fs = require('fs'); // Node.js File System module
+const path = require('path'); 
+
 
 // Configurez Multer pour spécifier où stocker les fichiers téléchargés
 const storage = multer.diskStorage({
@@ -20,10 +23,15 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({   storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5, // 5 MB limit (adjust as needed)
+    }, });
 
 // Route d'inscription du docteur avec téléchargement de la photo
-router.post('/inscriptionDoctor', upload.single('photo'), async (req, res) => {
+router.post('/inscriptionDoctor', upload.single('photo'),async (req, res) => {
+    console.log("Request Body:", req.body);
+    console.log("Request File:", req.file);
     let { name, firstname, contact, speciality, experience, email, password, Role } = req.body;
 
     if (name == "" || firstname == "" || contact == "" || speciality == "" || experience == "" || email == "" || Role == "" || password == "") {
@@ -51,14 +59,15 @@ router.post('/inscriptionDoctor', upload.single('photo'), async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
+        
 
         const newDoctor = new Doctor({
             name,
-            firstname,
+            firstName:firstname,
             contact,
             speciality,
             experience,
-            photo: req.file.filename // Enregistrez le nom du fichier téléchargé dans la propriété 'photo'
+            photo: req.file.filename// Enregistrez le nom du fichier téléchargé dans la propriété 'photo'
         });
 
         const savedDoctor = await newDoctor.save();
