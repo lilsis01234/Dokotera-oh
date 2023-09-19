@@ -13,7 +13,7 @@ const ComptePatient = require('../models/ComptePatient')
 router.post('/loginDoctor', async (req, res) => {
     try {
         const compte = await CompteDoctor.findOne({ email: req.body.email })
-            .populate('Role', ['id', 'RoleTitle']);
+            .populate('Role', ['id', 'RoleTitle', 'Etat']);
 
         if (!compte) {
             return res.status(401).json({ message: 'Compte non trouvé' });
