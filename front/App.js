@@ -14,42 +14,38 @@ import CardDoctors from './components/CardDoctor/CardDoctorList';
 import RegisterPatient  from './components/Authentification/Inscription/InscriptionPatient';
 import RegisterDoctor from './components/Authentification/Inscription/InscriptionDoctor';
 
-import LoginDoctorScreen from './components/Authentification/Login/LoginDoctor';
-import LoginPatientScreen from './components/Authentification/Login/LoginPatient';
-
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator screenOptions={{ headerShown: false }}/>
-    //     <Stack.Screen name="Login" component={Login} />
-    //     <Stack.Screen
-    //       name="RegistrationDoctorScreen"
-    //       component={RegisterDoctorScreen}
-    //     ></Stack.Screen>
-    //     <Stack.Screen
-    //       name="RegistrationScreen"
-    //       component={RegisterScreen}
-    //     ></Stack.Screen>
-    //     <Stack.Screen name="LoginDoctorScreen" component={LoginDoctorScreen} />
-    //     <Stack.Screen
-    //       name="LoginPatientScreen"
-    //       component={LoginPatientScreen}
-    //     />
-    //     <Stack.Screen name="HomeScreen" component={HomeScreen} />
-    //   <Stack.Navigator initialRouteName="login">
-    //     <Stack.Screen name="home" component={CardDoctors} />
-    //     <Stack.Screen name="inscriptionDoctor" component={RegisterDoctor} />
-    //     {/* <Stack.Screen name="inscriptionPatient" component={} /> */}
-    //     <Stack.Screen name="inscriptionPatient" component={RegisterPatient} />
-    //     <Stack.Screen name="login" component={LoginDoctorScreen} />  
-    //     <Stack.Screen name="loginPatient" component={LoginPatientScreen} />   
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}/>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen
+          name="RegistrationDoctorScreen"
+          component={RegisterDoctorScreen}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="RegistrationScreen"
+          component={RegisterScreen}
+        ></Stack.Screen>
+        <Stack.Screen name="LoginDoctorScreen" component={LoginDoctorScreen} />
+        <Stack.Screen
+          name="LoginPatientScreen"
+          component={LoginPatientScreen}
+        />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Navigator initialRouteName="login">
+        <Stack.Screen name="home" component={CardDoctors} />
+        <Stack.Screen name="inscriptionDoctor" component={RegisterDoctor} />
+        {/* <Stack.Screen name="inscriptionPatient" component={} /> */}
+        <Stack.Screen name="inscriptionPatient" component={RegisterPatient} />
+        <Stack.Screen name="login" component={LoginDoctorScreen} />  
+        <Stack.Screen name="loginPatient" component={LoginPatientScreen} />   
 
  
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-    <Text>Hello Native</Text>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
