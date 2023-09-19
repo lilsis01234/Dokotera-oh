@@ -13,7 +13,7 @@ const RendezVousSchema = new Schema({
     description:String,
     heureStart : String,
     date: Date,
-    approbation: Boolean
+    approbation:Boolean,
 })
 
 const RendezVous = mongoose.model('RendezVous', RendezVousSchema)

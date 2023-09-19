@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   textButton: {
     color: COLORS.light,
-    fontWeight: 500,
+    fontWeight: "lighter",
     fontSize: 23,
   },
 });

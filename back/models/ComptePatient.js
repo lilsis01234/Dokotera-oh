@@ -6,7 +6,7 @@ const ComptePatientSchema = new Schema({
     password: String,
     compte:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Patient'
+        ref:'User'
     },
     Role:{
         type:mongoose.Schema.Types.ObjectId,
