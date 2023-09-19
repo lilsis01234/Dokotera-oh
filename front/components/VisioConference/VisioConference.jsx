@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 import { Video } from 'expo-av';
+import axios from 'axios';
 
 const AppointmentsScreen = ({ route }) => {
   const [docteur,setDocteur]= useState([]);
