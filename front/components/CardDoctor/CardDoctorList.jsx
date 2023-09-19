@@ -5,6 +5,14 @@ import axios from "axios"; // Import axios for making API requests
 
 const CardDoctors=()=> {
 
+  const idDoctor = localStorage.getItem('id');
+  console.log(idDoctor)
+
+  const token = localStorage.getItem('token');
+  console.log(token)
+  if(!token){
+    navigation.navigate("accueil")
+  }
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
@@ -30,18 +38,16 @@ const CardDoctors=()=> {
           <Text style={s.text}>
             <Text style={s.text2}> Name </Text> {doctor.name} {doctor.firstname}
             <br />
-            <Text style={s.text2}> firstname:</Text> {doctor.speciality}
+            <Text style={s.text2}> Spécialité:</Text> {doctor.speciality}
             <br />
-            <Text style={s.text2}> specialité </Text>
-            {doctor.contact}
-          </Text>
-          <TouchableOpacity
+            <TouchableOpacity
               onPress={() => {
               navigation.navigate('callScreen', { doctorId: doctor._id });
            }}
     >
-          <Text>Appeler</Text>
+          <Text>Appeler maintenant</Text>
           </TouchableOpacity>
+          </Text>
         </View>
       ))}
     </View>
