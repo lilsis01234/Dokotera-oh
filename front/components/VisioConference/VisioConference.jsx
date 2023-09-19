@@ -38,9 +38,12 @@ const AppointmentsScreen = ({ route }) => {
           audio: true, // You can include audio if needed
         });
         setLocalStream(stream);
+      } else {
+        console.log("Permission not granted for camera");
+        // Handle the case where permission is not granted, e.g., show a message to the user
       }
     };
-
+  
     getCameraPermission();
   }, []);
 
