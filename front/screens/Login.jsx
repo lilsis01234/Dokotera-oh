@@ -16,11 +16,24 @@ const Login = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <ButtonRegister
             title="Docteur"
-            onPress={() => navigation.navigate("LoginDoctorScreen")}
+            onPress={() => navigation.navigate("login")}
           />
           <ButtonRegister
             title="Patient"
-            onPress={() => navigation.navigate("LoginPatientScreen")}
+            onPress={() => navigation.navigate("loginPatient")}
+          />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.loginText}>Vous n'avez pas encore de compte? S'inscrire en tant que </Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <ButtonRegister
+            title="Docteur"
+            onPress={() => navigation.navigate("inscriptionDoctor")}
+          />
+          <ButtonRegister
+            title="Patient"
+            onPress={() => navigation.navigate("inscriptionPatient")}
           />
         </View>
       </View>
