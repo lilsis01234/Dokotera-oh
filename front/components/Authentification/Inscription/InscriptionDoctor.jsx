@@ -88,6 +88,7 @@ const pickImage = async () => {
   
       console.log(res.data);
       Alert.alert("Success", "Registration successful");
+      navigation.navigate("accueil");
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "Registration failed");
