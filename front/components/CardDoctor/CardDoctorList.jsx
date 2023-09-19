@@ -2,6 +2,7 @@ import { s } from "./CardDoctor.style";
 import React, { useEffect, useState } from "react";
 import { Image, Text, View, TouchableOpacity } from "react-native";
 import axios from "axios"; // Import axios for making API requests
+import AppointmentForm from "../ListeRendezVous/AjoutRendezVous";
 
 const CardDoctors = ({ navigation }) => {
   const token = localStorage.getItem('token');
@@ -54,6 +55,7 @@ const CardDoctors = ({ navigation }) => {
             >
           <Text>Appeler maintenant</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
               onPress={() => {
               navigation.navigate('profil', { doctorId: doctor._id });
@@ -61,6 +63,15 @@ const CardDoctors = ({ navigation }) => {
             >
           <Text>Voir son profil</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+              onPress={() => {
+              navigation.navigate('rendezVous', { doctorId: doctor._id });
+           }}
+          >
+          <Text>Prendre un rendez-vous</Text>
+          </TouchableOpacity>
+
           </Text>
         </View>
       ))}
