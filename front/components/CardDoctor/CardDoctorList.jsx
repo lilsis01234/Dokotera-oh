@@ -11,7 +11,7 @@ const CardDoctors = ({ navigation }) => {
   const role = localStorage.getItem('role');
 
   console.log(role)
-  // console.log(monid)
+
   if (!token) {
     navigation.navigate('accueil');
     return null;
@@ -61,6 +61,7 @@ const CardDoctors = ({ navigation }) => {
           navigation.navigate('listerendezVousPatient', { PatientId: monid });
         }}
       >
+      <Image style={styles.profileButtonImage}source={require('../../assets/images/calendar.jpg')}/>
        <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
       </TouchableOpacity>
       )}
