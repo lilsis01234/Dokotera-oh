@@ -26,7 +26,7 @@ const AppointmentForm = ({ route }) => {
       const appointmentData = {
         patient: localStorage.getItem("id"),
         docteur: doctorId,
-        contenu: description,
+        description: description,
         date: `${dateRendezVous}`,
         heureStart: `${time}`,
       };

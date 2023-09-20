@@ -9,12 +9,12 @@ const Patient = require('../models/Patient')
 // Route pour créer un rendez-vous (Create)
 router.post('/rendezvous', async (req, res) => {
     try {
-        const { patient, docteur, contenu, date,heureStart } = req.body;
+        const { patient, docteur, description, date,heureStart } = req.body;
 
         const newRendezVous = new RendezVous({
             patient,
             docteur,
-            contenu,
+            description,
             date,
             heureStart,
             approbation:0,

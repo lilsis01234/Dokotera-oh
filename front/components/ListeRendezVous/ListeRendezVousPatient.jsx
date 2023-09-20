@@ -42,12 +42,16 @@ const PatientAppointments = ({ route }) => {
               ]}
             >
               <Text style={styles.patientName}>
-                {appointment.docteur.name} {appointment.docteur.firstname}
+                Rendez-Vous avec le docteur {appointment.docteur.name} {appointment.docteur.firstname}
               </Text>
               <Text style={styles.appointmentDescription}>{appointment.description}</Text>
               <Text style={styles.appointmentTime}>
                 {appointment.date} à {appointment.heureStart}
               </Text>
+                {appointment.approbation===1 || appointment.approbation === true ? 
+                (<Text style={styles.patientName}>Approuvé</Text>):
+                (<Text style={styles.patientName}>En attente d'approbation</Text>
+                )}
             </View>
           ))}
         </View>

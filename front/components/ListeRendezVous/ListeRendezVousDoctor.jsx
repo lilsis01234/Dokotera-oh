@@ -53,7 +53,7 @@ const AppointmentListDoctor = ({ route }) => {
     >
       <Text style={styles.patientName}>
         {item.patient.name && item.patient.firstname
-          ? `${item.patient.name} ${item.patient.firstname}`
+          ? `Rendez-vous avec ${item.patient.name} ${item.patient.firstname}`
           : "anonymous"}
       </Text>
       <Text style={styles.appointmentDescription}>{item.description}</Text>
@@ -74,6 +74,7 @@ const AppointmentListDoctor = ({ route }) => {
     </View>
   );
   
+console.log(appointments)
 
   return (
     <View style={styles.container}>
