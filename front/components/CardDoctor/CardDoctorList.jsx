@@ -44,6 +44,7 @@ const CardDoctors = ({ navigation }) => {
 
 
       {etat === "docteur"? (
+        <>
         <TouchableOpacity
         style={styles.profileButton}
          onPress={() => {
@@ -54,7 +55,18 @@ const CardDoctors = ({ navigation }) => {
           <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+        style={styles.profileButton}
+         onPress={() => {
+         navigation.navigate('mesmessages', { doctorId: monid });
+          }}
+        >
+        <Image style={styles.profileButtonImage}source={require('../../assets/images/calendar.jpg')}/>
+          <Text style={styles.profileButtonText}>Mes messages</Text>
+        </TouchableOpacity>
+        </>
       ):(
+        <>
         <TouchableOpacity
         style={styles.profileButton}
         onPress={() => {
@@ -64,6 +76,17 @@ const CardDoctors = ({ navigation }) => {
       <Image style={styles.profileButtonImage}source={require('../../assets/images/calendar.jpg')}/>
        <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.profileButton}
+         onPress={() => {
+         navigation.navigate('mesmessagesPatient', { doctorId: monid });
+          }}
+        >
+        <Image style={styles.profileButtonImage}source={require('../../assets/images/calendar.jpg')}/>
+          <Text style={styles.profileButtonText}>Mes messages</Text>
+        </TouchableOpacity>
+        </>
       )}
       <TouchableOpacity
         style={styles.profileButton}
