@@ -49,7 +49,7 @@ router.post('/loginDoctor', async (req, res) => {
 router.post('/loginPatient', async (req, res) => {
     try {
         const compte = await ComptePatient.findOne({ email: req.body.email })
-            .populate('Role', ['id', 'RoleTitle'])
+            .populate('Role', ['id', 'RoleTitle','Etat'])
             .populate('compte', 'id');
 
         if (!compte) {

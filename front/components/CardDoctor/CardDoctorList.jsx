@@ -61,6 +61,7 @@ const CardDoctors = ({ navigation }) => {
           navigation.navigate('listerendezVousPatient', { PatientId: monid });
         }}
       >
+       <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
       </TouchableOpacity>
       )}
       <TouchableOpacity
@@ -79,15 +80,17 @@ const CardDoctors = ({ navigation }) => {
           <View style={styles.imageContainer}>
             <Image style={styles.profileImage} source={{ uri: `http://localhost:3000/uploads/${doctor.photo}` }} />
            
-            {etat !== "docteur"|| role !=="docteur" && (
+            {etat === "patient" && role === "patient" && (
             <TouchableOpacity 
-             style={styles.messageImage}
-             onPress={() => {
-              navigation.navigate('message', { destinataireId: doctor._id });
-             }}
+              style={styles.messageImage}
+              onPress={() => {
+                navigation.navigate('message', { destinataireId: doctor._id });
+              }}
             >
-            <Image style={styles.messagecardImage} source={require('../../assets/images/message.jpg')}/>
-            </TouchableOpacity>)}
+              <Image style={styles.messagecardImage} source={require('../../assets/images/message.jpg')}/>
+            </TouchableOpacity>
+             )}
+
           
           </View>
           <Text style={styles.name}>
