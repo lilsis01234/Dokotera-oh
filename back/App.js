@@ -15,18 +15,14 @@ const RendezVous = require('./api/RendezVous')
 const ChatRouter = require('./api/Chat')
 
 
-/*const RoleRouter = require('./api/Role')
-const LoginRouter = require('./api/login')*/
-
-
 const bodyParser = require('express').json
 app.use(bodyParser())
-app.use(cors());
 
+//permission de cors
 app.use(cors({
-    origin: 'http://localhost:19006', // Autorisez les demandes depuis votre application React Native
+    origin: 'http://localhost:19006', 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Autorisez l'envoi de cookies (si nécessaire)
+    credentials: true, 
   }));
 
 const PORT = process.env.PORT || 3000;
@@ -41,10 +37,6 @@ app.use('/chat', ChatRouter)
 app.use('/uploads', express.static('uploads'));
 
 
-
-/*app.use('/role', RoleRouter)
-app.use('/login', LoginRouter)*/
-
 app.listen(port, () => {
-    console.log(`mandeha tsara le port ${port}`)
+    console.log(`marche sur le port ${port}`)
 })

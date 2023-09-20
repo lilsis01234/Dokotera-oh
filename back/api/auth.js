@@ -5,11 +5,12 @@ const jwt = require('jsonwebtoken');
 
 const Doctor = require('../models/Doctor')
 const CompteDoctor = require('../models/CompteDoctor')
-// const Role2 = require('../models/Role2')
+
 
 
 const bcrypt = require('bcrypt')
 const ComptePatient = require('../models/ComptePatient')
+
 
 router.post('/loginDoctor', async (req, res) => {
     try {

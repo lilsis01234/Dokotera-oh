@@ -13,10 +13,10 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 
-// Configurez Multer pour spécifier où stocker les fichiers téléchargés
+// Configuration de Multer pour spécifier où stocker les fichiers téléchargés
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Le dossier 'uploads/' doit être créé dans votre projet
+        cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -69,7 +69,7 @@ router.post('/inscriptionDoctor', upload.single('photo'),async (req, res) => {
             contact,
             speciality,
             experience,
-            photo: req.file.filename// Enregistrez le nom du fichier téléchargé dans la propriété 'photo'
+            photo: req.file.filename
         });
 
         const savedDoctor = await newDoctor.save();
@@ -87,15 +87,14 @@ router.post('/inscriptionDoctor', upload.single('photo'),async (req, res) => {
 
         const role = await Rolemodel.findById(savedCompteDoctor.Role);
 
-        // role contiendra RoleTitle et Etat
         if (!role) {
             throw new Error("Role not found"); // Gérez le cas où le rôle n'est pas trouvé
         }
 
-        // Générez un token JWT
+        // Générer un token JWT
         const token = jwt.sign({ userId: savedCompteDoctor._id }, 'yourSecretKey', { expiresIn: '1h' });
 
-        // Envoyez le token, l'ID de l'utilisateur, et d'autres données dans la réponse
+        // Envoyer le token, l'ID de l'utilisateur, et d'autres données dans la réponse
         res.status(200).json({
             status: "SUCCESS",
             message: "Inscription réussie",
@@ -121,7 +120,7 @@ router.post('/inscriptionDoctor', upload.single('photo'),async (req, res) => {
 router.get('/allDoctor',(req,res)=>{
     Doctor.find({})
     .then((doctors) => {
-        res.json(doctors); // Send the JSON response
+        res.json(doctors); 
     })
     .catch((err) => {
         console.error(err);

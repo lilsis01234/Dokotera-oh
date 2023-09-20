@@ -36,7 +36,7 @@ router.post('/addRole',(req,res)=>{
 router.get('/getRole',(req,res)=>{
     Role.find({})
     .then((role) => {
-        res.json(role); // Send the JSON response
+        res.json(role); 
     })
     .catch((err) => {
         console.error(err);

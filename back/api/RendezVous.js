@@ -6,7 +6,7 @@ const Doctor = require('../models/Doctor')
 const Patient = require('../models/Patient')
 
 
-// Route pour créer un rendez-vous (Create)
+// Route pour créer un rendez-vous 
 router.post('/rendezvous', async (req, res) => {
     try {
         const { patient, docteur, description, date,heureStart } = req.body;
@@ -30,7 +30,7 @@ router.post('/rendezvous', async (req, res) => {
 
 
 
-// Route pour obtenir un rendez-vous par son ID (Read)
+// Route pour obtenir un rendez-vous par son ID 
 router.get('/rendezvous/:id', async (req, res) => {
     try {
         const rendezvous = await RendezVous.findById(req.params.id).populate('docteur',['name']);
@@ -47,7 +47,6 @@ router.get('/rendezvous/:id', async (req, res) => {
 
 //Les rendez-vous d'un docteur particulier
 
-// Backend
 router.get('/rendezvouslist/:idDocteur', async (req, res) => {
   const idDoc = req.params.idDocteur;
 
@@ -104,7 +103,7 @@ router.post('/annulerapprobation/:id', async (req, res) => {
   }
 });
 
-
+//rendez-vous d'un patient
     router.get('/rendezvouslistpatient/:idPatient', async (req, res) => {
         const idPatient = req.params.idPatient
         try {
@@ -119,7 +118,7 @@ router.post('/annulerapprobation/:id', async (req, res) => {
         });
 
 
-// Route pour mettre à jour un rendez-vous par son ID (Update)
+// Route pour mettre à jour un rendez-vous par son ID 
 router.put('/rendezvous/:id', async (req, res) => {
     try {
         const { contenu, date, heureStart } = req.body;
@@ -141,7 +140,7 @@ router.put('/rendezvous/:id', async (req, res) => {
     }
 });
 
-// Route pour supprimer un rendez-vous par son ID (Delete)
+// Route pour supprimer un rendez-vous par son ID 
 router.delete('/desapprendezvous/:id', async (req, res) => {
     try {
         const deletedRendezVous = await RendezVous.findByIdAndRemove(req.params.id);
