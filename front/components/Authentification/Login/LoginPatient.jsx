@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from "react-native";
 import axios from "axios";
-import { styles } from "./LoginGabi.style";
-import { style } from "../../Input/Input.style";
-import COLORS from "../../../theme";
+// import { styles } from "./LoginGabi.style";
+// import { style } from "../../Input/Input.style";
+// import COLORS from "../../../theme";
 
 const LoginPatientScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const LoginPatientScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:3000/auth/loginPatient", {
+      const res = await axios.post("http://127.0.0.1:3000/auth/loginPatient", {
         email,
         password,
       });
@@ -22,6 +22,8 @@ const LoginPatientScreen = ({ navigation }) => {
         localStorage.setItem('token',res.data.token)
         localStorage.setItem('id',res.data.Id)
         localStorage.setItem('etat',res.data.etat)
+        localStorage.setItem('role',res.data.role)
+
 
         navigation.navigate("home");
       } else {

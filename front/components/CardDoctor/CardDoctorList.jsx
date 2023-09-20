@@ -8,7 +8,10 @@ const CardDoctors = ({ navigation }) => {
   const monid = localStorage.getItem('id');
   
   const etat = localStorage.getItem('etat');
-  console.log(monid)
+  const role = localStorage.getItem('role');
+
+  console.log(role)
+  // console.log(monid)
   if (!token) {
     navigation.navigate('accueil');
     return null;
@@ -34,6 +37,8 @@ const CardDoctors = ({ navigation }) => {
           navigation.navigate('profil', { doctorId: monid });
         }}
       >
+       
+        <Image style={styles.profileButtonImage}source={require('../../assets/images/logoprofil.jpg')}/>
         <Text style={styles.profileButtonText}>Voir mon profil</Text>
       </TouchableOpacity>
 
@@ -45,6 +50,7 @@ const CardDoctors = ({ navigation }) => {
          navigation.navigate('listerendezVousDoctor', { doctorId: monid });
           }}
         >
+        <Image style={styles.profileButtonImage}source={require('../../assets/images/calendar.jpg')}/>
           <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
         </TouchableOpacity>
 
@@ -55,9 +61,16 @@ const CardDoctors = ({ navigation }) => {
           navigation.navigate('listerendezVousPatient', { PatientId: monid });
         }}
       >
-        <Text style={styles.profileButtonText}>Mes rendez-vous</Text>
       </TouchableOpacity>
       )}
+      <TouchableOpacity
+        style={styles.profileButton}
+        onPress={() => {
+          navigation.navigate('accueil');
+        }}
+      >
+ <Text style={styles.profileButtonText}>Se deconnecter</Text>
+      </TouchableOpacity>
 
 
       <Text style={styles.header}>Tous les docteurs</Text>
@@ -65,6 +78,17 @@ const CardDoctors = ({ navigation }) => {
         <View key={index} style={styles.doctorCard}>
           <View style={styles.imageContainer}>
             <Image style={styles.profileImage} source={{ uri: `http://localhost:3000/uploads/${doctor.photo}` }} />
+           
+            {etat !== "docteur"|| role !=="docteur" && (
+            <TouchableOpacity 
+             style={styles.messageImage}
+             onPress={() => {
+              navigation.navigate('message', { destinataireId: doctor._id });
+             }}
+            >
+            <Image style={styles.messagecardImage} source={require('../../assets/images/message.jpg')}/>
+            </TouchableOpacity>)}
+          
           </View>
           <Text style={styles.name}>
             {doctor.name} {doctor.firstname}
@@ -84,7 +108,8 @@ const CardDoctors = ({ navigation }) => {
               navigation.navigate('profil', { doctorId: doctor._id });
             }}
           >
-            <Text style={styles.actionButtonText}>Voir son profil</Text>
+          
+          <Text style={styles.actionButtonText}>Voir son profil</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
@@ -113,6 +138,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
+    display:"flex",
+    flexDirection:"row",
   },
   profileButtonText: {
     color: "white",
@@ -134,6 +161,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     overflow: "hidden",
     marginBottom: 10,
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-between",
   },
   profileImage: {
     width: 100,
@@ -160,6 +190,21 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  profileButtonImage:{
+    width:20,
+    height:20,
+    marginRight:10,
+    borderRadius:"50%",
+  },
+  messageImage:{
+    marginRight:25,
+    marginTop:5,
+  },
+  messagecardImage:{
+    width:40,
+    height:40,
+    borderRadius:10,
+  }
 });
 
 export default CardDoctors;

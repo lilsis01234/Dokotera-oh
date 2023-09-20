@@ -4,20 +4,20 @@ const Schema = mongoose.Schema
 const ChatSchema = new Schema({
     patient:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Patient'
+        ref:'User'
     },
     docteur:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Doctor'
     },
     contenu : String,
-    pieceJointes: [
-        {
-            originalname: String,
-            filename: String,
-            path: String
-        }
-    ],
+    // pieceJointes: [
+    //     {
+    //         originalname: String,
+    //         filename: String,
+    //         path: String
+    //     }
+    // ],
     date: Date
 })
 

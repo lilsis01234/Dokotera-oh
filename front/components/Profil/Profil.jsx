@@ -8,9 +8,10 @@ const UserProfile = ({ route, navigation }) => {
   const id = localStorage.getItem('id');
   
   useEffect(() => {
-    const { doctorId } = route.params;
+    console.log(route.params.doctorId)
+    const idDocteur  = route.params.doctorId;
 
-    axios.get(`http://localhost:3000/doctor/profil/${doctorId}`)
+    axios.get(`http://localhost:3000/doctor/profil/${idDocteur}`)
       .then((response) => {
         setUserData(response.data);
       })

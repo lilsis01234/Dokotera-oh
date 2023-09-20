@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from "react-native";
 import axios from "axios";
-import { styles } from "./LoginGabi.style";
-import { style } from "../../Input/Input.style";
-import COLORS from "../../../theme";
+// import { styles } from "./LoginGabi.style";
+// import { style } from "../../Input/Input.style";
+// import COLORS from "../../../theme";
 
 const LoginDoctorScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const LoginDoctorScreen = ({ navigation }) => {
         console.log("Login Response Data:", res.data);
 
         localStorage.setItem('token',res.data.token)
-        localStorage.setItem('id',res.data.id)
+        localStorage.setItem('id',res.data.Id)
         localStorage.setItem('etat',res.data.etat)
 
         navigation.navigate("home");

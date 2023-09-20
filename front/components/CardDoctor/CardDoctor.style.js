@@ -44,6 +44,7 @@ const s = StyleSheet.create({
   back: {
     backgroundColor: "",
   },
+  
 });
 
 export { s };

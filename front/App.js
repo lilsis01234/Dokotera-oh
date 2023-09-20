@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+
 // Importez vos composants de vue
 import CardDoctors from './components/CardDoctor/CardDoctorList';
 import RegisterPatient  from './components/Authentification/Inscription/InscriptionPatient';
@@ -17,6 +18,9 @@ import Login from "./screens/Login";
 import UserProfile from "./components/Profil/Profil";
 import AppointmentForm from "./components/ListeRendezVous/AjoutRendezVous";
 import AppointmentListDoctor from "./components/ListeRendezVous/ListeRendezVousDoctor";
+import PatientAppointments from "./components/ListeRendezVous/ListeRendezVousPatient"
+import MessageForm from "./components/Messages/SendMessage";
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -33,7 +37,8 @@ const App = () => {
         <Stack.Screen name="profil" component={UserProfile} initialParams={{ doctorId: null }}/>  
         <Stack.Screen name="rendezVous" component={AppointmentForm} initialParams={{ doctorId: null }}/>  
         <Stack.Screen name="listerendezVousDoctor" component={AppointmentListDoctor} initialParams={{ doctorId: null }}/>  
-        <Stack.Screen name="listerendezVousPatient" component={AppointmentForm} initialParams={{ PatientId: null }}/>  
+        <Stack.Screen name="listerendezVousPatient" component={PatientAppointments} initialParams={{ PatientId: null }}/> 
+        <Stack.Screen name="message" component={MessageForm} initialParams={{ destinataireId: null }}/>  
       </Stack.Navigator>
     </NavigationContainer>
   );

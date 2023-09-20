@@ -1,41 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import axios from "axios";
 
-const AppointmentListPatient = ( { route, navigation } ) => {
+const PatientAppointments = ({ route }) => {
   const [appointments, setAppointments] = useState([]);
- 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    console.log(route.params.PatientId)
-    const { idPatient } = route.params.PatientId;
-    
+    const idPatient = route.params.PatientId;
+
     axios
       .get(`http://127.0.0.1:3000/rendezvous/rendezvouslistpatient/${idPatient}`)
       .then((response) => {
         setAppointments(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching appointments:", error);
+        console.error("Erreur lors de la récupération des rendez-vous :", error);
+        setLoading(false);
       });
   }, [route.params]);
 
-  const renderItem = ({ item }) => (
-    <View style={styles.appointmentItem}>
-      <Text style={styles.patientName}>{item.patient.name} {item.patient.firstname}</Text>
-      <Text style={styles.appointmentDescription}>{item.description}</Text>
-      <Text style={styles.appointmentTime}>{item.date.toLocaleDateString()} at {item.heureStart}</Text>
-    </View>
-  );
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Appointments</Text>
-      <FlatList
-        data={appointments}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id}
-      />
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Vos rendez-vous</Text>
+      {loading ? (
+        <Text>Chargement...</Text>
+      ) : (
+        <View>
+          {appointments.map((appointment, index) => (
+            <View
+              key={index}
+              style={[
+                styles.appointmentItem,
+                { backgroundColor: appointment.approbation === 1 || appointment.approbation === true ? "green" : "red" },
+              ]}
+            >
+              <Text style={styles.patientName}>
+                {appointment.docteur.name} {appointment.docteur.firstname}
+              </Text>
+              <Text style={styles.appointmentDescription}>{appointment.description}</Text>
+              <Text style={styles.appointmentTime}>
+                {appointment.date} à {appointment.heureStart}
+              </Text>
+            </View>
+          ))}
+        </View>
+      )}
+    </ScrollView>
   );
 };
 
@@ -50,27 +67,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
+    color:"white",
   },
   appointmentItem: {
     marginBottom: 20,
     padding: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#ffffff",
     borderRadius: 10,
   },
   patientName: {
     fontSize: 18,
     fontWeight: "bold",
+    color:"#ffffff",
   },
   appointmentDescription: {
     fontSize: 16,
     marginTop: 5,
+    color:"#ffffff",
   },
   appointmentTime: {
     fontSize: 14,
     marginTop: 5,
-    color: "#666",
+    color: "#ffffff",
   },
 });
 
-export default AppointmentListPatient;
+export default PatientAppointments;

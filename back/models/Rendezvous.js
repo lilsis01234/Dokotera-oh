@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const RendezVousSchema = new Schema({
     patient:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Patient'
+        ref:'User'
     },
     docteur:{
         type:mongoose.Schema.Types.ObjectId,

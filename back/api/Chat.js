@@ -22,7 +22,7 @@ const upload = multer({ storage: storage });
 router.post('/chat', upload.array('pieceJointes', 5), async (req, res) => {
     try {
         const { patient, docteur, contenu, date } = req.body;
-        const pieceJointes = [];
+        // const pieceJointes = [];
 
         // Ajoutez les informations sur les fichiers joints téléchargés
         req.files.forEach((file) => {

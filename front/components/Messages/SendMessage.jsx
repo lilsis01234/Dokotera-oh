@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
 
-
-const AppointmentForm = ({ route }) => {
+const MessageForm = ({ route }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
-  const navigation = useNavigation();
 
-  const { doctorId } = route.params;
+  const { destinataireId } = route.params;
 
   const handleAppointmentSubmit = async () => {
     try {
@@ -25,20 +22,18 @@ const AppointmentForm = ({ route }) => {
       // Construct the appointment object
       const appointmentData = {
         patient: localStorage.getItem("id"),
-        docteur: doctorId,
+        docteur: destinataireId,
         contenu: description,
-        date: `${dateRendezVous}`,
-        heureStart: `${time}`,
+        date: new Date().getDate(), //To get the Current Seconds,
       };
 
       // Make an API request to create the appointment
       const response = await axios.post(
-        "http://127.0.0.1:3000/rendezvous/rendezvous",
+        "http://127.0.0.1:3000/chat/chat",
         appointmentData
       );
 
       console.log(response.data);
-      navigation.navigate("home");
       Alert.alert("Success", "Appointment created successfully.");
       // You can add navigation logic to go back or navigate to a different screen
     } catch (error) {
@@ -49,20 +44,6 @@ const AppointmentForm = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Date:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="YYYY-MM-DD"
-        onChangeText={(text) => setDate(text)}
-      />
-
-      <Text style={styles.label}>Heure:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="HH:MM"
-        value={time}
-        onChangeText={(text) => setTime(text)}
-      />
 
       <Text style={styles.label}>Description:</Text>
       <TextInput
@@ -115,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppointmentForm;
+export default MessageForm;

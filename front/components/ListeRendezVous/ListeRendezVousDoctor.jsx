@@ -1,16 +1,13 @@
+// Frontend
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet, Button } from "react-native";
 import axios from "axios";
 
-const AppointmentListDoctor = ({ route, navigation }) => {
+const AppointmentListDoctor = ({ route }) => {
   const [appointments, setAppointments] = useState([]);
-  const [demands, setDemands] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(route.params.doctorId);
-
-    // Use route.params.doctorId directly, without further destructuring
     const idDocteur = route.params.doctorId;
 
     axios
@@ -20,48 +17,75 @@ const AppointmentListDoctor = ({ route, navigation }) => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching appointments:", error);
-        setLoading(false);
-      });
-
-    // Fetch demands
-    axios
-      .get(`http://127.0.0.1:3000/rendezvous/rendezvousnonapplist/${idDocteur}`)
-      .then((response) => {
-        setDemands(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching demands:", error);
+        console.error("Erreur lors de la récupération des rendez-vous :", error);
         setLoading(false);
       });
   }, [route.params]);
 
+  const approveAppointment = (id) => {
+    axios
+      .post(`http://127.0.0.1:3000/rendezvous/approbation/${id}`)
+      .then((response) => {
+        // Handle success if needed
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'approbation du rendez-vous :", error);
+      });
+  };
+
+  const cancelApproveAppointment = (id) => {
+    axios
+      .post(`http://127.0.0.1:3000/rendezvous/annulerapprobation/${id}`)
+      .then((response) => {
+        // Handle success if needed
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'approbation du rendez-vous :", error);
+      });
+  };
+
   const renderItem = ({ item }) => (
-    <View style={styles.appointmentItem}>
-      <Text style={styles.patientName}>{item.patient.name} {item.patient.firstname}</Text>
+    <View
+      style={[
+        styles.appointmentItem,
+        { backgroundColor: item.approbation ? "white" : "yellow" },
+      ]}
+    >
+      <Text style={styles.patientName}>
+        {item.patient.name && item.patient.firstname
+          ? `${item.patient.name} ${item.patient.firstname}`
+          : "anonymous"}
+      </Text>
       <Text style={styles.appointmentDescription}>{item.description}</Text>
-      <Text style={styles.appointmentTime}>{item.date} à {item.heureStart}</Text>
+      <Text style={styles.appointmentTime}>
+        {item.date} à {item.heureStart}
+      </Text>
+      {!item.approbation ? (
+        <Button
+          title="Approuver"
+          onPress={() => approveAppointment(item._id)}
+        />
+      ) : (
+        <Button
+          title="Annuler l'approbation"
+          onPress={() => cancelApproveAppointment(item._id)}
+        />
+      )}
     </View>
   );
+  
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Appointments</Text>
+      <Text style={styles.title}>Vos rendez-vous</Text>
       {loading ? (
-        <Text>Loading...</Text>
+        <Text>Chargement...</Text>
       ) : (
-        <>
-          <FlatList
-            data={demands}
-            renderItem={renderItem}
-            keyExtractor={(item) => item._id}
-            style={styles.yellowBackground}
-          />
-          {appointments.length === 0 && demands.length === 0 && (
-            <Text>No Appointments</Text>
-          )}
-        </>
+        <FlatList
+          data={appointments}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id}
+        />
       )}
     </View>
   );
@@ -98,9 +122,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
     color: "#666",
-  },
-  yellowBackground: {
-    backgroundColor: "yellow",
   },
 });
 
