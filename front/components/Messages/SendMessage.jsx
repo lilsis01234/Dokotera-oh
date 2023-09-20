@@ -1,61 +1,92 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
-import axios from "axios";
+import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
+import DocumentPicker from "react-native-document-picker";
 
 const MessageForm = ({ route }) => {
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const { destinataireId } = route.params;
+
+  const handleFilePick = async () => {
+    try {
+      const result = await DocumentPicker.pickMultiple({
+        type: [DocumentPicker.types.allFiles],
+      });
+
+      // Store selected files in the state
+      setSelectedFiles(result);
+    } catch (error) {
+      if (DocumentPicker.isCancel(error)) {
+        // Handle canceled picker
+      } else {
+        // Handle other errors
+        console.error(error);
+      }
+    }
+  };
 
   const handleAppointmentSubmit = async () => {
     try {
       // Validate form fields
-      if (!date || !time || !description) {
+      if (!description) {
         Alert.alert("Error", "Please fill in all fields.");
         return;
       }
 
-      const dateRendezVous = new Date(date);
+      // Create a FormData object to send both text and files
+      const formData = new FormData();
+      formData.append("patient", localStorage.getItem("id"));
+      formData.append("docteur", destinataireId);
+      formData.append("contenu", description);
 
-      // Construct the appointment object
-      const appointmentData = {
-        patient: localStorage.getItem("id"),
-        docteur: destinataireId,
-        contenu: description,
-        date: new Date().getDate(), //To get the Current Seconds,
-      };
+      // Append selected files to FormData
+      for (const file of selectedFiles) {
+        formData.append("pieceJointes", {
+          uri: file.uri,
+          type: file.type,
+          name: file.name,
+        });
+      }
 
-      // Make an API request to create the appointment
+      // Make an API request to create the chat with files
       const response = await axios.post(
         "http://127.0.0.1:3000/chat/chat",
-        appointmentData
+        formData
       );
 
       console.log(response.data);
-      Alert.alert("Success", "Appointment created successfully.");
+      Alert.alert("Success", "Chat created successfully.");
       // You can add navigation logic to go back or navigate to a different screen
     } catch (error) {
       console.error(error);
-      Alert.alert("Error", "Failed to create the appointment.");
+      Alert.alert("Error", "Failed to create the chat.");
     }
   };
 
   return (
     <View style={styles.container}>
-
       <Text style={styles.label}>Description:</Text>
       <TextInput
         style={styles.textArea}
         multiline
-        placeholder="Raison de votre rendez-vous"
+        placeholder="Description"
         value={description}
         onChangeText={(text) => setDescription(text)}
       />
 
+      <TouchableOpacity onPress={handleFilePick} style={styles.filePicker}>
+        <Text style={styles.filePickerText}>Select Files</Text>
+      </TouchableOpacity>
+
+      {selectedFiles.length > 0 && (
+        <Text style={styles.selectedFilesText}>
+          {selectedFiles.length} file(s) selected
+        </Text>
+      )}
+
       <TouchableOpacity onPress={handleAppointmentSubmit} style={styles.button}>
-        <Text style={styles.buttonText}>Confirmer</Text>
+        <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
     </View>
   );
@@ -70,18 +101,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 5,
   },
-  input: {
-    padding: 10,
-    backgroundColor: "lightgray",
-    borderRadius: 10,
-    marginBottom: 10,
-  },
   textArea: {
     padding: 10,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginBottom: 10,
     height: 100,
+  },
+  filePicker: {
+    backgroundColor: "#00bfa6",
+    borderRadius: 20,
+    padding: 15,
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  filePickerText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  selectedFilesText: {
+    fontSize: 16,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: "#00bfa6",
