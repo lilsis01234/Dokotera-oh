@@ -1,13 +1,11 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet,Image } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons"; // Import FontAwesome5 for icons
-import ButtonRegister from "../components/Buttons/ButtonRegister";
 
 const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Bienvenue !</Text>
-       */}
+
        <Image style = {styles.photo} source={require('../assets/images/bienvenue.jpg')}/>
       <View style={styles.optionsContainer}>
         <TouchableOpacity

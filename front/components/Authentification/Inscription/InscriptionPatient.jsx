@@ -101,6 +101,7 @@ const RegisterPatient = () => {
     }
   };
 
+  //obtention des roles
   useEffect(() => {
     axios
       .get("http://127.0.0.1:3000/role/getRole")

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from "react-native";
 import axios from "axios";
-// import { styles } from "./LoginGabi.style";
-// import { style } from "../../Input/Input.style";
-// import COLORS from "../../../theme";
+
 
 const LoginPatientScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");

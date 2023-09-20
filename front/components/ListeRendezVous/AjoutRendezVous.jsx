@@ -38,9 +38,9 @@ const AppointmentForm = ({ route }) => {
       );
 
       console.log(response.data);
-      navigation.navigate("home");
       Alert.alert("Success", "Appointment created successfully.");
-      // You can add navigation logic to go back or navigate to a different screen
+      navigation.navigate("home");
+
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "Failed to create the appointment.");

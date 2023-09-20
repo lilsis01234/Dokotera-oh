@@ -51,7 +51,6 @@ const MessageForm = ({ route }) => {
       Alert.alert("Success", "Chat created successfully.");
       navigation.navigate("home");
 
-      // You can add navigation logic to go back or navigate to a different screen
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "Failed to create the chat.");

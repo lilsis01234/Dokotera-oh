@@ -1,11 +1,7 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-// Importez vos composants de vue
 import CardDoctors from './components/CardDoctor/CardDoctorList';
 import RegisterPatient  from './components/Authentification/Inscription/InscriptionPatient';
 import RegisterDoctor from './components/Authentification/Inscription/InscriptionDoctor';

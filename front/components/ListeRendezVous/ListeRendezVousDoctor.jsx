@@ -1,4 +1,3 @@
-// Frontend
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet, Button } from "react-native";
 import axios from "axios";
@@ -26,7 +25,6 @@ const AppointmentListDoctor = ({ route }) => {
     axios
       .post(`http://127.0.0.1:3000/rendezvous/approbation/${id}`)
       .then((response) => {
-        // Handle success if needed
       })
       .catch((error) => {
         console.error("Erreur lors de l'approbation du rendez-vous :", error);
@@ -37,7 +35,6 @@ const AppointmentListDoctor = ({ route }) => {
     axios
       .post(`http://127.0.0.1:3000/rendezvous/annulerapprobation/${id}`)
       .then((response) => {
-        // Handle success if needed
       })
       .catch((error) => {
         console.error("Erreur lors de l'approbation du rendez-vous :", error);
