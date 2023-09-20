@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
-import DocumentPicker from "react-native-document-picker";
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
+import axios from "axios";
 
 const MessageForm = ({ route }) => {
   const [description, setDescription] = useState("");
@@ -8,22 +8,8 @@ const MessageForm = ({ route }) => {
 
   const { destinataireId } = route.params;
 
-  const handleFilePick = async () => {
-    try {
-      const result = await DocumentPicker.pickMultiple({
-        type: [DocumentPicker.types.allFiles],
-      });
-
-      // Store selected files in the state
-      setSelectedFiles(result);
-    } catch (error) {
-      if (DocumentPicker.isCancel(error)) {
-        // Handle canceled picker
-      } else {
-        // Handle other errors
-        console.error(error);
-      }
-    }
+  const handleFileChange = (event) => {
+    setSelectedFiles(event.target.files);
   };
 
   const handleAppointmentSubmit = async () => {
@@ -42,18 +28,11 @@ const MessageForm = ({ route }) => {
 
       // Append selected files to FormData
       for (const file of selectedFiles) {
-        formData.append("pieceJointes", {
-          uri: file.uri,
-          type: file.type,
-          name: file.name,
-        });
+        formData.append("pieceJointes", file);
       }
 
       // Make an API request to create the chat with files
-      const response = await axios.post(
-        "http://127.0.0.1:3000/chat/chat",
-        formData
-      );
+      const response = await axios.post("http://127.0.0.1:3000/chat/chat", formData);
 
       console.log(response.data);
       Alert.alert("Success", "Chat created successfully.");
@@ -75,15 +54,11 @@ const MessageForm = ({ route }) => {
         onChangeText={(text) => setDescription(text)}
       />
 
-      <TouchableOpacity onPress={handleFilePick} style={styles.filePicker}>
-        <Text style={styles.filePickerText}>Select Files</Text>
-      </TouchableOpacity>
-
-      {selectedFiles.length > 0 && (
-        <Text style={styles.selectedFilesText}>
-          {selectedFiles.length} file(s) selected
-        </Text>
-      )}
+      <input
+        type="file"
+        multiple
+        onChange={handleFileChange}
+      />
 
       <TouchableOpacity onPress={handleAppointmentSubmit} style={styles.button}>
         <Text style={styles.buttonText}>Submit</Text>
@@ -101,28 +76,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 5,
   },
+  input: {
+    padding: 10,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    marginBottom: 10,
+  },
   textArea: {
     padding: 10,
     backgroundColor: "lightgray",
     borderRadius: 10,
     marginBottom: 10,
     height: 100,
-  },
-  filePicker: {
-    backgroundColor: "#00bfa6",
-    borderRadius: 20,
-    padding: 15,
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  filePickerText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  selectedFilesText: {
-    fontSize: 16,
-    marginBottom: 10,
   },
   button: {
     backgroundColor: "#00bfa6",
