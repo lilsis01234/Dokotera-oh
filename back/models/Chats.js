@@ -11,13 +11,13 @@ const ChatSchema = new Schema({
         ref:'Doctor'
     },
     contenu : String,
-    // pieceJointes: [
-    //     {
-    //         originalname: String,
-    //         filename: String,
-    //         path: String
-    //     }
-    // ],
+    pieceJointes: [
+        {
+            originalname: String,
+            filename: String,
+            path: String
+        }
+    ],
     date: Date
 })
 
