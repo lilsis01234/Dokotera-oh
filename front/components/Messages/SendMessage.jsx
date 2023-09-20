@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+
 
 const MessageForm = ({ route }) => {
   const [description, setDescription] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
-
+  const navigation = useNavigation()
   const { destinataireId } = route.params;
 
   const handleFileChange = (event) => {
@@ -36,6 +38,8 @@ const MessageForm = ({ route }) => {
 
       console.log(response.data);
       Alert.alert("Success", "Chat created successfully.");
+      navigation.navigate("home");
+
       // You can add navigation logic to go back or navigate to a different screen
     } catch (error) {
       console.error(error);
