@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +9,17 @@ const MessageForm = ({ route }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const navigation = useNavigation()
   const { destinataireId } = route.params;
+  const[destinataire,setDestinataire]=useState([])
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/doctor/profil/${destinataireId}`)
+      .then((response) => {
+        setDestinataire(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [route.params]);
 
   const handleFileChange = (event) => {
     setSelectedFiles(event.target.files);
@@ -49,6 +60,7 @@ const MessageForm = ({ route }) => {
 
   return (
     <View style={styles.container}>
+    <Text>A {destinataire.name} {destinataire.firstName}</Text>
       <Text style={styles.label}>Description:</Text>
       <TextInput
         style={styles.textArea}
